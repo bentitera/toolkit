@@ -1,0 +1,339 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Django Models: Building a Blog &#8212; Code Toolkit Fall 2018 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Django-Models:-Building-a-Blog">
+<h1>Django Models: Building a Blog<a class="headerlink" href="#Django-Models:-Building-a-Blog" title="Permalink to this headline">¶</a></h1>
+<p><strong>GOALS</strong>:</p>
+<ul class="simple">
+<li>Introduce Django Models and Databases</li>
+<li>Add a Blog to our Site</li>
+<li>Use Python to analyze Blog Data</li>
+</ul>
+<div class="section" id="Starting-the-Blog">
+<h2>Starting the Blog<a class="headerlink" href="#Starting-the-Blog" title="Permalink to this headline">¶</a></h2>
+<p>We will add a blog app to our site in the familiar manner. Be sure that
+you start by navigating to your project directory and activate the
+existing virtual environment (<code class="docutils literal notranslate"><span class="pre">pipenv</span> <span class="pre">shell</span></code>). Now, we create the new
+application with</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">startapp</span> <span class="n">blog</span>
+</pre></div>
+</div>
+<p>Next, be sure to add this app to your <code class="docutils literal notranslate"><span class="pre">settings.py</span></code> file in the main
+project directory.</p>
+</div>
+<div class="section" id="Django-Models">
+<h2>Django Models<a class="headerlink" href="#Django-Models" title="Permalink to this headline">¶</a></h2>
+<p>As we saw in our earlier applications, we had a default <code class="docutils literal notranslate"><span class="pre">models.py</span></code>
+file. The <code class="docutils literal notranslate"><span class="pre">models</span></code> are Django’s place to structure database elements.
+We will see how to use the admin console to produce entries to this
+database for our blog. For example, suppose we want to be able to parse
+<em>Title</em>, <em>Author</em>, <em>Body</em>, <em>Created Date</em>, and <em>Published Date</em>. We will
+create fields for these that are then stored as data in a default SQLite
+database.</p>
+<p>To begin, open the <code class="docutils literal notranslate"><span class="pre">models.py</span></code> file. There are a variety of kinds of
+fields that we can use, but we will start with some basics. To see more
+refer to the Django <strong>Field</strong> documentation:</p>
+<p><a class="reference external" href="https://docs.djangoproject.com/en/2.0/ref/models/fields/#common-model-field-options">https://docs.djangoproject.com/en/2.0/ref/models/fields/#common-model-field-options</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+
+
+
+
+<span class="c1"># Create your models here.</span>
+<span class="k">class</span> <span class="nc">Post</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="n">author</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">User</span><span class="p">,</span><span class="n">on_delete</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">,</span> <span class="n">related_name</span> <span class="o">=</span> <span class="s1">&#39;author&#39;</span><span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">created_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">blank</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">null</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+    <span class="n">published_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will allow us to login to the website and directly enter new blog
+posts with each of these fields. Notice that the title is a
+<code class="docutils literal notranslate"><span class="pre">CharField</span></code> whose length has been limited. The <code class="docutils literal notranslate"><span class="pre">author</span></code> is a
+<code class="docutils literal notranslate"><span class="pre">ForeignKey</span></code> that maps to user. This is a many to one element, that
+allows the user to create multiple posts. The <code class="docutils literal notranslate"><span class="pre">body</span></code> is a
+<code class="docutils literal notranslate"><span class="pre">TextField</span></code> and our <code class="docutils literal notranslate"><span class="pre">created_date</span></code> and <code class="docutils literal notranslate"><span class="pre">published_date</span></code> are
+<code class="docutils literal notranslate"><span class="pre">DateTimeField</span></code> types.</p>
+<p>These will make more sense once we see the administration side which we
+will activate now.</p>
+</div>
+<div class="section" id="Django-Administration">
+<h2>Django Administration<a class="headerlink" href="#Django-Administration" title="Permalink to this headline">¶</a></h2>
+<p>The admin side of Django allows us to login to the site and work in a
+friendly browser view. We start with creating a login for the admin in
+the terminal with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">createsuperuser</span>
+</pre></div>
+</div>
+<p>You will be promted to enter a username, email, and password. Remember
+these, as you will be using them in just a minute. Before being able to
+login, we register the model class we’ve created in our <code class="docutils literal notranslate"><span class="pre">admin.py</span></code>
+file as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Post</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Post</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, run our server and head to <a class="reference external" href="admin">127.0.0.1:8000/admin</a>.
+Hopefully after logging in, you will see the following:</p>
+<div class="figure">
+<img alt="" src="content/.ipynb_checkpoints/images/blog_admin.png" />
+</div>
+<p>Go ahead and add a few posts with arbitrary information such as:</p>
+<div class="figure">
+<img alt="" src="content/.ipynb_checkpoints/images/blog_detail.png" />
+</div>
+</div>
+<div class="section" id="Accessing-our-Data:-QuerySets">
+<h2>Accessing our Data: QuerySets<a class="headerlink" href="#Accessing-our-Data:-QuerySets" title="Permalink to this headline">¶</a></h2>
+<p>Once you have a few data fields entered, you can go access this
+information in the shell. Shut your server down, and install IPython
+into your virtual enviornment. Next, start IPython up in the terminal
+running:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">shell</span>
+</pre></div>
+</div>
+<p>Now, we are using python just as we have in a Jupyter notebook. We want
+to load our model to examine, just as we’ve imported other objects in
+the past.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">blog.models</span> <span class="kn">import</span> <span class="n">Post</span>
+</pre></div>
+</div>
+<p>Now we have access to all the attributes of the Post. Recall that when
+we defined the Post class, we gave it attributes named
+<code class="docutils literal notranslate"><span class="pre">title,</span> <span class="pre">author,</span></code> and <code class="docutils literal notranslate"><span class="pre">body</span></code>. We can display these looping through
+the Post objects.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="n">Post</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">title</span><span class="o">.</span><span class="n">title</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Blog-View">
+<h2>Blog View<a class="headerlink" href="#Blog-View" title="Permalink to this headline">¶</a></h2>
+<p>Much like we used the <code class="docutils literal notranslate"><span class="pre">TemplateView</span></code> for our earlier applications, we
+will use two additional view types that Django has for typical viewing
+behavior. First, is the <code class="docutils literal notranslate"><span class="pre">ListView</span></code>. This will connect with our data
+and allow us to list specific pieces of it. Makes sense for a blog
+homepage.</p>
+<p>Create a new view, import the <code class="docutils literal notranslate"><span class="pre">ListView</span></code>, and a blank <code class="docutils literal notranslate"><span class="pre">base.html</span></code>
+and <code class="docutils literal notranslate"><span class="pre">home.html</span></code> file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.views.generic</span> <span class="kn">import</span> <span class="n">ListView</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="nn">models</span> <span class="kn">import</span> <span class="n">Post</span>
+
+<span class="k">class</span> <span class="nc">BlogListView</span><span class="p">(</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Post</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;home.html&#39;</span>
+</pre></div>
+</div>
+<p>Create the base much as our earlier example, but place the content
+inside of a <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> tag as follows:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class </span><span class="o">=</span> <span class="s">&quot;container&quot;</span><span class="p">&gt;</span>
+    {% block content %}
+    {% endblock content %}
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">ListView</span></code> contains an <code class="docutils literal notranslate"><span class="pre">object_list</span></code> that we can use to access
+the elements of the model in a view, similar to how we accessed them in
+the shell before. We will do this by looping through the blog entries
+and displaying the <strong>title</strong> and <strong>body</strong> of the entries.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>{% block content %}
+  {% for post in object_list %}
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;post-entry&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">&gt;</span>{{ post.title }}<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ post.body }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  {% endfor %}
+{% endblock content %}
+</pre></div>
+</div>
+<p>Finally, we create a url to our blog, add this to our navigation, and
+fire up the server. We should see something that looks like a list of
+our entries with the title and body of the post.</p>
+<div class="figure">
+<img alt="" src="content/.ipynb_checkpoints/images/blog_home.png" />
+</div>
+</div>
+<div class="section" id="Adding-Individual-Blog-Pages">
+<h2>Adding Individual Blog Pages<a class="headerlink" href="#Adding-Individual-Blog-Pages" title="Permalink to this headline">¶</a></h2>
+<p>While our blog pages now have a home, we would like to link to these
+pages and see the entire blog entry. To do so, we will create a template
+named <code class="docutils literal notranslate"><span class="pre">blog_detail.html</span></code> and use a <code class="docutils literal notranslate"><span class="pre">DetailView</span></code> to display the
+details of the blog content. We need three things here; a view for the
+detail pages, a template for them, and a url that maps to these.</p>
+<p>The view for the individual blogs should feel familiar. We import the
+<code class="docutils literal notranslate"><span class="pre">DetailView</span></code> and create a class based view with the template named
+<code class="docutils literal notranslate"><span class="pre">blog_detail.html</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BlogDetailView</span><span class="p">(</span><span class="n">DetailView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Post</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;blog_detail.html&#39;</span>
+</pre></div>
+</div>
+<p>Next, we can create our template in the templates folder named
+<code class="docutils literal notranslate"><span class="pre">blog_detail.html</span></code>. We will ask for the detail <code class="docutils literal notranslate"><span class="pre">object_list</span></code>
+containing the model elements and return the <strong>title</strong> and <strong>body</strong> of
+the blog.</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span>{% block content %}
+
+    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;post-entry&quot;</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>{{ post.title }}<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>{{ post.body }}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+
+{% endblock content %}
+</pre></div>
+</div>
+<p>Finally, we create the urls. We should recognize that now we are
+creating a list of urls, unlike our earlier work. We will make use of
+the fact that Django provides each entry in the database with an index
+called a <strong>primary key</strong>. In other words, my first blog post has primary
+key 1, my second 2, and so on. Thus, we can create urls based on these
+indicies as follows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;blog/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">BlogListView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;blog&#39;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;blog/&lt;int:pk&gt;/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">BlogDetailView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span>
+         <span class="p">]</span>
+</pre></div>
+</div>
+<p>In a similar manner, we can head over to our templates and attach href
+values to these titles based on the primary key as follows:</p>
+<p><code class="docutils literal notranslate"><span class="pre">html</span> <span class="pre">&lt;a</span> <span class="pre">href=&quot;{%</span> <span class="pre">url</span> <span class="pre">'blog_detail'</span> <span class="pre">post.pk</span> <span class="pre">%}&quot;&gt;Title&lt;/a&gt;</span></code></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Code Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01-Introduction-Installations.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-Intro-to-Data.html">Introduction to Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03-UNIX-and-Terminal.html">Command Line and UNIX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04-Introduction-to-Python.html">Introduction to Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-Exploring-with-Pandas.html">Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06-Pandas-and-Matplotlib.html">Important Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07-Folium.html">Mapping Data with Folium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08-Beautiful-Soup-Scraping.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09-Intro-Spacy.html">spaCy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11-django-intro.html">Django Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12-Django-templates.html">Templates and Bootstrap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13-Django-Models-Blogs.html">Django Models: Building a Blog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14-Django-Poll-I.html">Making a Polling Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15-Django-Style.html">Styling the Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16-NaiveBayes.html">Naive Bayes Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17-deployment-with-Flask.html">Introduction to Flask</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17-deployment-with-Flask.html#Hello,-world.">Hello, world.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17-deployment-with-Flask.html#Add-in-machine-learning">Add in machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab_01.html">Exploring Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab_02-policin.html">Investigating Stop and Frisk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab_03-mappin-gardens.html">Folium and Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab_04.html">Lab 04: Scraping Reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab-05.html">Web Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab-06.html">Polls II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab-07.html">FLASK App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lab-08.html">Learning Application</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jacob Frias Koehler, PhD.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/content/.ipynb_checkpoints/13-Django-Models-Blogs-checkpoint.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

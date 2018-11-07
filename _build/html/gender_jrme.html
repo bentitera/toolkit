@@ -1,0 +1,785 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>&lt;no title&gt; &#8212; Code Toolkit Fall 2018 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="k">import</span> <span class="n">punctuation</span>
+
+
+
+
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;tokenizers/punkt/english.pickle&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">text</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;articles/jrme_test.txt&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">#tokenizer.tokenize(text)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">text</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[38]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&#39; \n Chapter 1: Making Mathematics Work in School\n\nAuthor(s): Deborah Loewenberg Ball, Jennifer Lewis &#39;
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">male_words</span><span class="o">=</span><span class="nb">set</span><span class="p">([</span><span class="s1">&#39;guy&#39;</span><span class="p">,</span><span class="s1">&#39;spokesman&#39;</span><span class="p">,</span><span class="s1">&#39;chairman&#39;</span><span class="p">,</span><span class="s2">&quot;men&#39;s&quot;</span><span class="p">,</span><span class="s1">&#39;men&#39;</span><span class="p">,</span><span class="s1">&#39;him&#39;</span><span class="p">,</span><span class="s2">&quot;he&#39;s&quot;</span><span class="p">,</span><span class="s1">&#39;his&#39;</span><span class="p">,</span><span class="s1">&#39;boy&#39;</span><span class="p">,</span><span class="s1">&#39;boyfriend&#39;</span><span class="p">,</span><span class="s1">&#39;boyfriends&#39;</span><span class="p">,</span><span class="s1">&#39;boys&#39;</span><span class="p">,</span><span class="s1">&#39;brother&#39;</span><span class="p">,</span><span class="s1">&#39;brothers&#39;</span><span class="p">,</span><span class="s1">&#39;dad&#39;</span><span class="p">,</span><span class="s1">&#39;dads&#39;</span><span class="p">,</span><span class="s1">&#39;dude&#39;</span><span class="p">,</span><span class="s1">&#39;father&#39;</span><span class="p">,</span><span class="s1">&#39;fathers&#39;</span><span class="p">,</span><span class="s1">&#39;fiance&#39;</span><span class="p">,</span><span class="s1">&#39;gentleman&#39;</span><span class="p">,</span><span class="s1">&#39;gentlemen&#39;</span><span class="p">,</span><span class="s1">&#39;god&#39;</span><span class="p">,</span><span class="s1">&#39;grandfather&#39;</span><span class="p">,</span><span class="s1">&#39;grandpa&#39;</span><span class="p">,</span><span class="s1">&#39;grandson&#39;</span><span class="p">,</span><span class="s1">&#39;groom&#39;</span><span class="p">,</span><span class="s1">&#39;he&#39;</span><span class="p">,</span><span class="s1">&#39;himself&#39;</span><span class="p">,</span><span class="s1">&#39;husband&#39;</span><span class="p">,</span><span class="s1">&#39;husbands&#39;</span><span class="p">,</span><span class="s1">&#39;king&#39;</span><span class="p">,</span><span class="s1">&#39;male&#39;</span><span class="p">,</span><span class="s1">&#39;man&#39;</span><span class="p">,</span><span class="s1">&#39;mr&#39;</span><span class="p">,</span><span class="s1">&#39;nephew&#39;</span><span class="p">,</span><span class="s1">&#39;nephews&#39;</span><span class="p">,</span><span class="s1">&#39;priest&#39;</span><span class="p">,</span><span class="s1">&#39;prince&#39;</span><span class="p">,</span><span class="s1">&#39;son&#39;</span><span class="p">,</span><span class="s1">&#39;sons&#39;</span><span class="p">,</span><span class="s1">&#39;uncle&#39;</span><span class="p">,</span><span class="s1">&#39;uncles&#39;</span><span class="p">,</span><span class="s1">&#39;waiter&#39;</span><span class="p">,</span><span class="s1">&#39;widower&#39;</span><span class="p">,</span><span class="s1">&#39;widowers&#39;</span><span class="p">])</span>
+<span class="n">female_words</span><span class="o">=</span><span class="nb">set</span><span class="p">([</span><span class="s1">&#39;heroine&#39;</span><span class="p">,</span><span class="s1">&#39;spokeswoman&#39;</span><span class="p">,</span><span class="s1">&#39;chairwoman&#39;</span><span class="p">,</span><span class="s2">&quot;women&#39;s&quot;</span><span class="p">,</span><span class="s1">&#39;actress&#39;</span><span class="p">,</span><span class="s1">&#39;women&#39;</span><span class="p">,</span><span class="s2">&quot;she&#39;s&quot;</span><span class="p">,</span><span class="s1">&#39;her&#39;</span><span class="p">,</span><span class="s1">&#39;aunt&#39;</span><span class="p">,</span><span class="s1">&#39;aunts&#39;</span><span class="p">,</span><span class="s1">&#39;bride&#39;</span><span class="p">,</span><span class="s1">&#39;daughter&#39;</span><span class="p">,</span><span class="s1">&#39;daughters&#39;</span><span class="p">,</span><span class="s1">&#39;female&#39;</span><span class="p">,</span><span class="s1">&#39;fiancee&#39;</span><span class="p">,</span><span class="s1">&#39;girl&#39;</span><span class="p">,</span><span class="s1">&#39;girlfriend&#39;</span><span class="p">,</span><span class="s1">&#39;girlfriends&#39;</span><span class="p">,</span><span class="s1">&#39;girls&#39;</span><span class="p">,</span><span class="s1">&#39;goddess&#39;</span><span class="p">,</span><span class="s1">&#39;granddaughter&#39;</span><span class="p">,</span><span class="s1">&#39;grandma&#39;</span><span class="p">,</span><span class="s1">&#39;grandmother&#39;</span><span class="p">,</span><span class="s1">&#39;herself&#39;</span><span class="p">,</span><span class="s1">&#39;ladies&#39;</span><span class="p">,</span><span class="s1">&#39;lady&#39;</span><span class="p">,</span><span class="s1">&#39;lady&#39;</span><span class="p">,</span><span class="s1">&#39;mom&#39;</span><span class="p">,</span><span class="s1">&#39;moms&#39;</span><span class="p">,</span><span class="s1">&#39;mother&#39;</span><span class="p">,</span><span class="s1">&#39;mothers&#39;</span><span class="p">,</span><span class="s1">&#39;mrs&#39;</span><span class="p">,</span><span class="s1">&#39;ms&#39;</span><span class="p">,</span><span class="s1">&#39;niece&#39;</span><span class="p">,</span><span class="s1">&#39;nieces&#39;</span><span class="p">,</span><span class="s1">&#39;priestess&#39;</span><span class="p">,</span><span class="s1">&#39;princess&#39;</span><span class="p">,</span><span class="s1">&#39;queens&#39;</span><span class="p">,</span><span class="s1">&#39;she&#39;</span><span class="p">,</span><span class="s1">&#39;sister&#39;</span><span class="p">,</span><span class="s1">&#39;sisters&#39;</span><span class="p">,</span><span class="s1">&#39;waitress&#39;</span><span class="p">,</span><span class="s1">&#39;widow&#39;</span><span class="p">,</span><span class="s1">&#39;widows&#39;</span><span class="p">,</span><span class="s1">&#39;wife&#39;</span><span class="p">,</span><span class="s1">&#39;wives&#39;</span><span class="p">,</span><span class="s1">&#39;woman&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [72]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">gender_the_sentence</span><span class="p">(</span><span class="n">sentence_words</span><span class="p">):</span>
+    <span class="n">mw_length</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">male_words</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">sentence_words</span><span class="p">))</span>
+    <span class="n">fw_length</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">female_words</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">sentence_words</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">mw_length</span><span class="o">&gt;</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">fw_length</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">gender</span><span class="o">=</span><span class="s1">&#39;male&#39;</span>
+    <span class="k">elif</span> <span class="n">mw_length</span><span class="o">==</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">fw_length</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">gender</span><span class="o">=</span><span class="s1">&#39;female&#39;</span>
+    <span class="k">elif</span> <span class="n">mw_length</span><span class="o">&gt;</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">fw_length</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">gender</span><span class="o">=</span><span class="s1">&#39;both&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">gender</span><span class="o">=</span><span class="s1">&#39;none&#39;</span>
+    <span class="k">return</span> <span class="n">gender</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [73]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">is_it_proper</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">():</span>
+            <span class="n">case</span><span class="o">=</span><span class="s1">&#39;upper&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">case</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span>
+
+        <span class="n">word_lower</span><span class="o">=</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">proper_nouns</span><span class="p">[</span><span class="n">word_lower</span><span class="p">][</span><span class="n">case</span><span class="p">]</span> <span class="o">=</span> <span class="n">proper_nouns</span><span class="p">[</span><span class="n">word_lower</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">case</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="c1">#This is triggered when the word hasn&#39;t been seen yet</span>
+            <span class="n">proper_nouns</span><span class="p">[</span><span class="n">word_lower</span><span class="p">]</span><span class="o">=</span> <span class="p">{</span><span class="n">case</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [74]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">increment_gender</span><span class="p">(</span><span class="n">sentence_words</span><span class="p">,</span><span class="n">gender</span><span class="p">):</span>
+    <span class="n">sentence_counter</span><span class="p">[</span><span class="n">gender</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="n">word_counter</span><span class="p">[</span><span class="n">gender</span><span class="p">]</span><span class="o">+=</span><span class="nb">len</span><span class="p">(</span><span class="n">sentence_words</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sentence_words</span><span class="p">:</span>
+        <span class="n">word_freq</span><span class="p">[</span><span class="n">gender</span><span class="p">][</span><span class="n">word</span><span class="p">]</span><span class="o">=</span><span class="n">word_freq</span><span class="p">[</span><span class="n">gender</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [75]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sexes</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">,</span><span class="s1">&#39;female&#39;</span><span class="p">,</span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="s1">&#39;both&#39;</span><span class="p">]</span>
+<span class="n">sentence_counter</span><span class="o">=</span><span class="p">{</span><span class="n">sex</span><span class="p">:</span><span class="mi">0</span> <span class="k">for</span> <span class="n">sex</span> <span class="ow">in</span> <span class="n">sexes</span><span class="p">}</span>
+<span class="n">word_counter</span><span class="o">=</span><span class="p">{</span><span class="n">sex</span><span class="p">:</span><span class="mi">0</span> <span class="k">for</span> <span class="n">sex</span> <span class="ow">in</span> <span class="n">sexes</span><span class="p">}</span>
+<span class="n">word_freq</span><span class="o">=</span><span class="p">{</span><span class="n">sex</span><span class="p">:{}</span> <span class="k">for</span> <span class="n">sex</span> <span class="ow">in</span> <span class="n">sexes</span><span class="p">}</span>
+<span class="n">proper_nouns</span><span class="o">=</span><span class="p">{}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [76]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;articles/*.txt&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+    <span class="n">text</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="s1">&#39;ignore&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="c1">#Split into sentences</span>
+    <span class="n">sentences</span><span class="o">=</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+        <span class="c1">#word tokenize and strip punctuation</span>
+            <span class="n">sentence_words</span><span class="o">=</span><span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="n">sentence_words</span><span class="o">=</span><span class="p">[</span><span class="n">w</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">punctuation</span><span class="p">)</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">sentence_words</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">punctuation</span><span class="p">))</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1">#figure out how often each word is capitalized</span>
+            <span class="p">[</span><span class="n">is_it_proper</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sentence_words</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]</span>
+
+            <span class="c1">#lower case it</span>
+            <span class="n">sentence_words</span><span class="o">=</span><span class="nb">set</span><span class="p">([</span><span class="n">w</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">sentence_words</span><span class="p">])</span>
+
+            <span class="c1">#Figure out if there are gendered words in the sentence by computing the length of the intersection of the sets</span>
+            <span class="n">gender</span><span class="o">=</span><span class="n">gender_the_sentence</span><span class="p">(</span><span class="n">sentence_words</span><span class="p">)</span>
+
+            <span class="c1">#Increment some counters</span>
+            <span class="n">increment_gender</span><span class="p">(</span><span class="n">sentence_words</span><span class="p">,</span><span class="n">gender</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [77]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">proper_nouns</span><span class="o">=</span><span class="nb">set</span><span class="p">([</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">proper_nouns</span> <span class="k">if</span>
+                  <span class="n">proper_nouns</span><span class="p">[</span><span class="n">word</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;upper&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span>
+                  <span class="p">(</span><span class="n">proper_nouns</span><span class="p">[</span><span class="n">word</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;upper&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span>
+                   <span class="n">proper_nouns</span><span class="p">[</span><span class="n">word</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="o">&gt;.</span><span class="mi">50</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [78]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">common_words</span><span class="o">=</span><span class="nb">set</span><span class="p">([</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">sorted</span> <span class="p">(</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">],</span>
+                                     <span class="n">key</span><span class="o">=</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">1000</span><span class="p">]]</span><span class="o">+</span><span class="p">[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">sorted</span> <span class="p">(</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">],</span><span class="n">key</span><span class="o">=</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">1000</span><span class="p">]])</span>
+
+<span class="n">common_words</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">common_words</span><span class="o">-</span><span class="n">male_words</span><span class="o">-</span><span class="n">female_words</span><span class="o">-</span><span class="n">proper_nouns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [79]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">male_percent</span><span class="o">=</span><span class="p">{</span><span class="n">word</span><span class="p">:(</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">word_counter</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">])</span>
+              <span class="o">/</span> <span class="p">(</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">word_counter</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">word_counter</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">common_words</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [80]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="si">%.1f%%</span><span class="s1"> gendered&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">sentence_counter</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">sentence_counter</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">sentence_counter</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">sentence_counter</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">sentence_counter</span><span class="p">[</span><span class="s1">&#39;both&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">sentence_counter</span><span class="p">[</span><span class="s1">&#39;none&#39;</span><span class="p">])))</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> sentences about men.&#39;</span> <span class="o">%</span> <span class="n">sentence_counter</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> sentences about women.&#39;</span> <span class="o">%</span> <span class="n">sentence_counter</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="si">%.1f</span><span class="s1"> sentences about men for each sentence about women.&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sentence_counter</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">sentence_counter</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+14.4% gendered
+207 sentences about men.
+471 sentences about women.
+0.4 sentences about men for each sentence about women.
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [81]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">header</span> <span class="o">=</span><span class="s1">&#39;Ratio</span><span class="se">\t</span><span class="s1">Male</span><span class="se">\t</span><span class="s1">Female</span><span class="se">\t</span><span class="s1">Word&#39;</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Male words&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="n">header</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">sorted</span> <span class="p">(</span><span class="n">male_percent</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="n">male_percent</span><span class="o">.</span><span class="n">get</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">50</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ratio</span><span class="o">=</span><span class="n">male_percent</span><span class="p">[</span><span class="n">word</span><span class="p">]</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">male_percent</span><span class="p">[</span><span class="n">word</span><span class="p">])</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">ratio</span><span class="o">=</span><span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="si">%.1f</span><span class="se">\t</span><span class="si">%02d</span><span class="se">\t</span><span class="si">%02d</span><span class="se">\t</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ratio</span><span class="p">,</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">word</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Female words&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="n">header</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">sorted</span> <span class="p">(</span><span class="n">male_percent</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="n">male_percent</span><span class="o">.</span><span class="n">get</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:</span><span class="mi">50</span><span class="p">]:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">ratio</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">male_percent</span><span class="p">[</span><span class="n">word</span><span class="p">])</span><span class="o">/</span><span class="n">male_percent</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">ratio</span><span class="o">=</span><span class="mi">100</span>
+    <span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;</span><span class="si">%.1f</span><span class="se">\t</span><span class="si">%01d</span><span class="se">\t</span><span class="si">%01d</span><span class="se">\t</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ratio</span><span class="p">,</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">word_freq</span><span class="p">[</span><span class="s1">&#39;female&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">word</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Male words
+Ratio   Male    Female  Word
+100.0   01      00      behavior
+100.0   01      00      refrained
+100.0   01      00      appreciate
+100.0   01      00      scientists
+100.0   01      00      incites
+100.0   01      00      twos).8
+100.0   01      00      interpretation
+100.0   02      00      revises
+100.0   01      00      unstable
+100.0   01      00      popular
+100.0   01      00      thinking-a
+100.0   01      00      underachievement
+100.0   01      00      material
+100.0   01      00      couched
+100.0   01      00      wise
+100.0   01      00      breath
+100.0   01      00      term
+100.0   02      00      studied
+100.0   01      00      insight
+100.0   01      00      three-second
+100.0   01      00      reorganizes
+100.0   01      00      tense
+100.0   01      00      corresponding
+100.0   02      00      meet
+100.0   01      00      are&#39;&#34;2
+100.0   01      00      redirecting
+100.0   01      00      reply
+100.0   03      00      the-1
+100.0   01      00      train
+100.0   01      00      forego
+100.0   02      00      detailed
+100.0   01      00      ratifies
+100.0   01      00      correct
+100.0   01      00      suspect
+100.0   01      00      systems
+100.0   01      00      allowed
+100.0   01      00      surprising
+100.0   01      00      up-front
+100.0   02      00      don&#39;t
+100.0   01      00      statement.p
+100.0   01      00      archetypical
+100.0   01      00      autism
+100.0   01      00      designated
+100.0   01      00      impressions
+100.0   01      00      un
+100.0   01      00      partici
+100.0   01      00      merged
+100.0   01      00      teachers-what
+100.0   01      00      cordance
+100.0   02      00      identified
+
+
+
+Female words
+Ratio   Male    Female  Word
+100.0   0       6       hadn&#39;t
+100.0   0       2       feel
+100.0   0       2       minority
+100.0   0       2       clarifier
+100.0   0       4       likely
+100.0   0       6       sion
+100.0   0       2       tension
+100.0   0       2       orientation
+100.0   0       2       reasoner
+100.0   0       2       writes
+100.0   0       2       eventually
+100.0   0       2       down
+100.0   0       2       spoken
+100.0   0       5       conditions
+100.0   0       2       describe
+100.0   0       4       stating
+100.0   0       2       finding
+100.0   0       2       grad
+100.0   0       2       focus
+100.0   0       2       returned
+100.0   0       2       relinquish
+100.0   0       2       speakers
+100.0   0       4       room
+100.0   0       4       aware
+100.0   0       4       p
+100.0   0       2       sent
+100.0   0       2       expected
+100.0   0       3       format
+100.0   0       3       moving
+100.0   0       2       seen
+100.0   0       3       saw
+100.0   0       2       various
+100.0   0       2       assumptions
+100.0   0       1       discussion-intensive
+100.0   0       2       credit
+100.0   0       2       contains
+100.0   0       2       hearing
+100.0   0       3       attending
+100.0   0       3       available
+100.0   0       3       considered
+100.0   0       8       chapter
+100.0   0       2       sequence
+100.0   0       3       individual
+100.0   0       2       interest
+100.0   0       2       everyday
+100.0   0       12      learning
+100.0   0       2       we&#39;re
+100.0   0       2       ready
+100.0   0       3       plans
+100.0   0       2       additionally
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">spacy</span>
+
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;en_core_web_sm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;You are the worst.  This is the best&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">sents</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+You are the worst.
+This is the best
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">sents</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">sentiment</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.0
+0.0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">doc</span><span class="o">.</span><span class="n">sentiment</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>0.0
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[9]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>()
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Code Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="content/01-Introduction-Installations.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/02-Intro-to-Data.html">Introduction to Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/03-UNIX-and-Terminal.html">Command Line and UNIX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/04-Introduction-to-Python.html">Introduction to Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/05-Exploring-with-Pandas.html">Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/06-Pandas-and-Matplotlib.html">Important Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/07-Folium.html">Mapping Data with Folium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/08-Beautiful-Soup-Scraping.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/09-Intro-Spacy.html">spaCy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/11-django-intro.html">Django Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/12-Django-templates.html">Templates and Bootstrap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/13-Django-Models-Blogs.html">Django Models: Building a Blog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/14-Django-Poll-I.html">Making a Polling Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/15-Django-Style.html">Styling the Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/16-NaiveBayes.html">Naive Bayes Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/17-deployment-with-Flask.html">Introduction to Flask</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/17-deployment-with-Flask.html#Hello,-world.">Hello, world.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/17-deployment-with-Flask.html#Add-in-machine-learning">Add in machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/lab_01.html">Exploring Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/lab_02-policin.html">Investigating Stop and Frisk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/lab_03-mappin-gardens.html">Folium and Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/lab_04.html">Lab 04: Scraping Reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/lab-05.html">Web Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/lab-06.html">Polls II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/lab-07.html">FLASK App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="content/lab-08.html">Learning Application</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jacob Frias Koehler, PhD.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/gender_jrme.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

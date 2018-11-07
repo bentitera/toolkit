@@ -1,0 +1,416 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Making a Polling Application\n",
+    "\n",
+    "Now, we add another application that asks users a question, processes a submission of a response, and displays the result of the poll.  While this is a very basic application, it demonstrates an important motivation for using Django, notably the ability to handle dynamic data.  To do so, we introduce an import object in an **HTML form** and also the **CRUD** paradigm to create, update, and destroy an object like a users poll response.  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Creating the Pols app\n",
+    "\n",
+    "In the main directory of your site, run the normal command to create a Django application\n",
+    "\n",
+    "```UNIX\n",
+    "python manage.py startapp polls\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Create Basic View\n",
+    "\n",
+    "We will start by creating a basic view to show we are at the index of the polls application.  In our `views.py` file, we enter the following.\n",
+    "\n",
+    "```python\n",
+    "from django.http import HttpResponse\n",
+    "\n",
+    "\n",
+    "def index(request):\n",
+    "    return HttpResponse(\"Hello, world. You're at the polls index.\")\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Adding the URL\n",
+    "\n",
+    "Now, we connect this view to a url.  We have to create a `urls.py` file.  After making the file, we enter the following.\n",
+    "\n",
+    "```python\n",
+    "from django.urls import path\n",
+    "\n",
+    "from . import views\n",
+    "\n",
+    "urlpatterns = [\n",
+    "    path('', views.index, name='index'),\n",
+    "]\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "As per usual, we need to add our urls from the polls app to our larger site.  To do so we go to the main `urls.py` file, and enter the following:\n",
+    "\n",
+    "```python\n",
+    "from django.contrib import admin\n",
+    "from django.urls import include, path\n",
+    "\n",
+    "urlpatterns = [\n",
+    "    path('polls/', include('polls.urls')),\n",
+    "   ...\n",
+    "]\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Creating the Models\n",
+    "\n",
+    "Now that we have the basic application up and running, let's go ahead and add the models for the questions.  In the `models.py` file, enter the following.\n",
+    "\n",
+    "```python\n",
+    "from django.db import models\n",
+    "\n",
+    "\n",
+    "class Question(models.Model):\n",
+    "    question_text = models.CharField(max_length=200)\n",
+    "    pub_date = models.DateTimeField('date published')\n",
+    "\n",
+    "\n",
+    "class Choice(models.Model):\n",
+    "    question = models.ForeignKey(Question, on_delete=models.CASCADE)\n",
+    "    choice_text = models.CharField(max_length=200)\n",
+    "    votes = models.IntegerField(default=0)\n",
+    "```\n",
+    "\n",
+    "Also, let's make sure we add the polls application to our `settings.py` file."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Add the Administration and Make Migrations\n",
+    "\n",
+    "Now, we want to be able to use the admin site to add Questions and Choices.  To do so, we need to go to the `admin.py` file and enter the following.\n",
+    "\n",
+    "```python\n",
+    "from django.contrib import admin\n",
+    "\n",
+    "from .models import Question\n",
+    "\n",
+    "admin.site.register(Question)\n",
+    "admin.site.register(Choice)\n",
+    "```\n",
+    "\n",
+    "Also, be sure to create the tables in the database by creating and applying migrations.\n",
+    "\n",
+    "```UNIX\n",
+    "python manage.py makemigrations\n",
+    "python manage.py migrate\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Adjust the Admin View\n",
+    "\n",
+    "```python\n",
+    "from django.db import models\n",
+    "\n",
+    "\n",
+    "class Question(models.Model):\n",
+    "    question_text = models.CharField(max_length=200)\n",
+    "    pub_date = models.DateTimeField('date published')\n",
+    "    #string method to return question text\n",
+    "    def __str__(self):\n",
+    "        return self.question_text\n",
+    "\n",
+    "\n",
+    "class Choice(models.Model):\n",
+    "    question = models.ForeignKey(Question, on_delete=models.CASCADE)\n",
+    "    choice_text = models.CharField(max_length=200)\n",
+    "    votes = models.IntegerField(default=0)\n",
+    "    \n",
+    "    def __str__(self):\n",
+    "        return self.choice_text\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Writing Views\n",
+    "\n",
+    "Now that we have the application hooked up, and data ready to be made use of, we want to create our views.  In our `views.py` file, let's add to our initial view a *detail, results*, and *vote* view.  In our `views.py` file let's write the following:\n",
+    "\n",
+    "```python\n",
+    "def detail(request, question_id):\n",
+    "    return HttpResponse(\"You're looking at question %s.\" % question_id)\n",
+    "\n",
+    "def results(request, question_id):\n",
+    "    response = \"You're looking at the results of question %s.\"\n",
+    "    return HttpResponse(response % question_id)\n",
+    "\n",
+    "def vote(request, question_id):\n",
+    "    return HttpResponse(\"You're voting on question %s.\" % question_id)\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### URLS\n",
+    "\n",
+    "For each of our new views, we will create a link in our `urls.py` file as follows.\n",
+    "\n",
+    "```python\n",
+    "\n",
+    "\n",
+    "urlpatterns = [\n",
+    "  ...\n",
+    "    # ex: /polls/5/\n",
+    "    path('<int:question_id>/', views.detail, name='detail'),\n",
+    "    # ex: /polls/5/results/\n",
+    "    path('<int:question_id>/results/', views.results, name='results'),\n",
+    "    # ex: /polls/5/vote/\n",
+    "    path('<int:question_id>/vote/', views.vote, name='vote'),\n",
+    "]\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## View Extension\n",
+    "\n",
+    "Now, we will adjust our index view to display the latest 5 questions.  To do so, we add a variable to our view that is the last five objects.  We do this with:\n",
+    "\n",
+    "```python\n",
+    "latest_question_list = Question.objects.order_by('-pub_date')[:5]\n",
+    "```\n",
+    "\n",
+    "then, we join these together and return the results to our `HttpResponse` method.\n",
+    "\n",
+    "```python\n",
+    "output = ', '.join([q.question_text for q in latest_question_list])\n",
+    "    return HttpResponse(output)\n",
+    "```\n",
+    "\n",
+    "Together, our updated `index` view function is as follows:\n",
+    "\n",
+    "```python\n",
+    "from .models import Question\n",
+    "\n",
+    "def index(request):\n",
+    "    latest_question_list = Question.objects.order_by('-pub_date')[:5]\n",
+    "    output = ', '.join([q.question_text for q in latest_question_list])\n",
+    "    return HttpResponse(output)\n",
+    "```\n",
+    "\n",
+    "This is an important idea.  We are taking data from our database, doing something to it, and returning the result.  "
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Template\n",
+    "\n",
+    "As before, we will create a folder to hold our templates.  This time, we add the template for our index view within the polls application as follows\n",
+    "\n",
+    "```UNIX\n",
+    "mkdir templates/polls/index.html\n",
+    "```\n",
+    "\n",
+    "Inside of this, add the following code:\n",
+    "\n",
+    "```HTML\n",
+    "{% if latest_question_list %}\n",
+    "    <ul>\n",
+    "    {% for question in latest_question_list %}\n",
+    "        <li><a href=\"/polls/{{ question.id }}/\">{{ question.question_text }}</a></li>\n",
+    "    {% endfor %}\n",
+    "    </ul>\n",
+    "{% else %}\n",
+    "    <p>No polls are available.</p>\n",
+    "{% endif %}\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Notice that we are asking the template to render an object called `latest_question_list`.  To do this, we need to adjust our view to include a **context** object that is a dictionary containing a list of objects.  To do so we add the following to our view:\n",
+    "\n",
+    "```python\n",
+    "context = {\n",
+    "        'latest_question_list': latest_question_list,\n",
+    "    }\n",
+    "```\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "also, because we are rendering the response in a template, we ask our view to return an `HttpResponse` that renders the template as follows:\n",
+    "\n",
+    "```python\n",
+    "return HttpResponse(template.render(context, request))\n",
+    "```\n",
+    "\n",
+    "Together, this gives us the following view:\n",
+    "\n",
+    "```python\n",
+    "from django.shortcuts import render\n",
+    "\n",
+    "from .models import Question\n",
+    "\n",
+    "\n",
+    "def index(request):\n",
+    "    latest_question_list = Question.objects.order_by('-pub_date')[:5]\n",
+    "    context = {'latest_question_list': latest_question_list}\n",
+    "    return render(request, 'polls/index.html', context)\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Raising 404 Errors\n",
+    "\n",
+    "For our detail view, we want to provide for the situation where the object doesn't exist.  Adjust the view as follows:\n",
+    "\n",
+    "```python\n",
+    "from django.shortcuts import get_object_or_404, render\n",
+    "\n",
+    "from .models import Question\n",
+    "# ...\n",
+    "def detail(request, question_id):\n",
+    "    question = get_object_or_404(Question, pk=question_id)\n",
+    "    return render(request, 'polls/detail.html', {'question': question})\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Detail Template\n",
+    "\n",
+    "Our Question detail template will display a list of questions.  Let's create the following template in `templates/polls/detail.html`:\n",
+    "\n",
+    "```HTML\n",
+    "<h1>{{ question.question_text }}</h1>\n",
+    "<ul>\n",
+    "{% for choice in question.choice_set.all %}\n",
+    "    <li>{{ choice.choice_text }}</li>\n",
+    "{% endfor %}\n",
+    "</ul>\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### URLs\n",
+    "\n",
+    "We can use the templating system to automate the urls in our templates.  For example, we can change\n",
+    "\n",
+    "```HTML\n",
+    "<li><a href=\"/polls/{{ question.id }}/\">{{ question.question_text }}</a></li>\n",
+    "```\n",
+    "\n",
+    "to \n",
+    "\n",
+    "```HTML\n",
+    "<li><a href=\"{% url 'detail' question.id %}\">{{ question.question_text }}</a></li>\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now we can update our urls for the polling app as follows\n",
+    "\n",
+    "```python\n",
+    "from django.urls import path\n",
+    "\n",
+    "from . import views\n",
+    "\n",
+    "app_name = 'polls'\n",
+    "urlpatterns = [\n",
+    "    path('', views.index, name='index'),\n",
+    "    path('<int:question_id>/', views.detail, name='detail'),\n",
+    "    path('<int:question_id>/results/', views.results, name='results'),\n",
+    "    path('<int:question_id>/vote/', views.vote, name='vote'),\n",
+    "]\n",
+    "```"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We should change the url in our `polls/index.html` file also from \n",
+    "\n",
+    "```HTML\n",
+    "<li><a href=\"{% url 'detail' question.id %}\">{{ question.question_text }}</a></li>\n",
+    "```\n",
+    "\n",
+    "to \n",
+    "\n",
+    "```HTML\n",
+    "<li><a href=\"{% url 'polls:detail' question.id %}\">{{ question.question_text }}</a></li>\n",
+    "```"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

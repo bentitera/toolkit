@@ -1,0 +1,263 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Django Introduction &#8212; Code Toolkit Fall 2018 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Django-Introduction">
+<h1>Django Introduction<a class="headerlink" href="#Django-Introduction" title="Permalink to this headline">¶</a></h1>
+<p>In this initial project, we will be introduced to formal use of the
+shell to create our first Django Project. As discussed, if you are using
+a Mac, you have a terminal available by looking in the search bar. The
+terminal is a place to interact with and create and edit programs. We
+will use the following commands:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">cd</span></code> (change directory)</li>
+<li><code class="docutils literal notranslate"><span class="pre">pwd</span></code> (print working directory)</li>
+<li><code class="docutils literal notranslate"><span class="pre">ls</span></code> (list files)</li>
+<li><code class="docutils literal notranslate"><span class="pre">mkdir</span></code> (make directory)</li>
+<li><code class="docutils literal notranslate"><span class="pre">touch</span></code> (create file)</li>
+</ul>
+<p>For example, I have a folder on my desktop where I keep all my files for
+this semester. I can open a new terminal and type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">Desktop</span> <span class="n">spring_18</span>
+</pre></div>
+</div>
+<p>and I will now be located in this folder. If I wanted to see the files
+here, I can write</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="n">F</span>
+</pre></div>
+</div>
+<p>where the <code class="docutils literal notranslate"><span class="pre">-F</span></code> flags directories.</p>
+<p>If we wanted to make a new directory named <code class="docutils literal notranslate"><span class="pre">images</span></code>, we can use</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">images</span>
+</pre></div>
+</div>
+<p>To create a new file, for example <code class="docutils literal notranslate"><span class="pre">home.html</span></code>, we would use</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="n">home</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Finally, we will be using virtual environments for this project and will
+use <code class="docutils literal notranslate"><span class="pre">pipenv</span></code> to do this. In our terminal we can type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pipenv</span>
+</pre></div>
+</div>
+<div class="section" id="A-First-Django-Project">
+<h2>A First Django Project<a class="headerlink" href="#A-First-Django-Project" title="Permalink to this headline">¶</a></h2>
+<p>To begin, we will create an empty project with Django to get a feel for
+using the virtual environment in the shell. We need to check that we
+have git working, and that we can open SublimeText (or another text
+editor) on our computers.</p>
+<div class="section" id="Set-up-Directory-and-Virtual-Environment">
+<h3>Set up Directory and Virtual Environment<a class="headerlink" href="#Set-up-Directory-and-Virtual-Environment" title="Permalink to this headline">¶</a></h3>
+<p>Let’s create a folder for our project on our desktop called django, and
+navigate into this folder by typing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">django</span>
+<span class="n">cd</span> <span class="n">django</span>
+</pre></div>
+</div>
+<p>Now we will create a virtual environment where we install django.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipenv</span> <span class="n">install</span> <span class="n">django</span>
+</pre></div>
+</div>
+<p>and activate it with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipenv</span> <span class="n">shell</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Start-a-Django-Project">
+<h3>Start a Django Project<a class="headerlink" href="#Start-a-Django-Project" title="Permalink to this headline">¶</a></h3>
+<p>Now, we can start a project to test our new django installation. Let’s
+create a project called <code class="docutils literal notranslate"><span class="pre">mysite</span></code> by typing the following in the
+terminal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">django</span><span class="o">-</span><span class="n">admin</span> <span class="n">startproject</span> <span class="n">mysite</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>We can now examine the structure of the directory we have created with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tree</span>
+</pre></div>
+</div>
+<div class="figure">
+<img alt="" src="../_images/django_tree.png" />
+</div>
+<p>This is the standard django project structure. A <code class="docutils literal notranslate"><span class="pre">manage.py</span></code> python
+file, and a directory named <code class="docutils literal notranslate"><span class="pre">mysite</span></code> containing four files:
+<code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>, <code class="docutils literal notranslate"><span class="pre">settings.py</span></code>, <code class="docutils literal notranslate"><span class="pre">urls.py</span></code>, and <code class="docutils literal notranslate"><span class="pre">wsgi.py</span></code>. To see
+the blank project in action, we will use the built in server, located in
+the <code class="docutils literal notranslate"><span class="pre">manage.py</span></code> file. To use this, we write</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">runserver</span>
+</pre></div>
+</div>
+<p>We should see the project launched on our local computer at
+<a class="reference external" href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a>. When we go to this page, we should see the
+following:</p>
+<div class="figure">
+<img alt="" src="../_images/django_home.png" />
+</div>
+<p>Now that we’ve started our project, we will add some content to it.</p>
+</div>
+<div class="section" id="Starting-an-App">
+<h3>Starting an App<a class="headerlink" href="#Starting-an-App" title="Permalink to this headline">¶</a></h3>
+<p>Similar to how we made use of the default Django project structure,
+within our project we will create an app named pages with the command</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">manage</span><span class="o">.</span><span class="n">py</span> <span class="n">startapp</span> <span class="n">pages</span>
+</pre></div>
+</div>
+<p>Now, we have a directory with the following structure</p>
+<div class="figure">
+<img alt="" src="../_images/app_tree.png" />
+</div>
+<p>We now will link this application to the Django project by opening the
+<code class="docutils literal notranslate"><span class="pre">settings.py</span></code> file located in the main <code class="docutils literal notranslate"><span class="pre">mysite</span></code> directory in a text
+editor. Find <code class="docutils literal notranslate"><span class="pre">INSTALLED_APPS</span></code>, and we will add our app <code class="docutils literal notranslate"><span class="pre">pages</span></code> to
+the list as shown.</p>
+<div class="figure">
+<img alt="" src="../_images/pages_app.png" />
+</div>
+</div>
+<div class="section" id="Django-Views">
+<h3>Django Views<a class="headerlink" href="#Django-Views" title="Permalink to this headline">¶</a></h3>
+<p>Now, we want to add some content to our app, and establish some
+connections that allow the content to be seen. In Django, the views
+determing the content displayed. We then have to use the urlconfs to
+decide where the content goes.</p>
+<p>Starting with the views file, lets add the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+<span class="c1"># Create your views here.</span>
+<span class="k">def</span> <span class="nf">homepageview</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s2">&quot;&lt;h3&gt;It&#39;s So Wonderful to see you Jacob!&lt;/h3&gt;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This view will accept a request, and return the HTML header that I’ve
+placed in <code class="docutils literal notranslate"><span class="pre">HttpResponse()</span></code>. Now, we have to establish the location for
+the file using a <code class="docutils literal notranslate"><span class="pre">urls</span></code> file. We create a new file in our pages
+directory named <code class="docutils literal notranslate"><span class="pre">urls.py</span></code>. Here, will use the urlpatterns call and
+provide a path to our page. If we want it to be at a page called
+<code class="docutils literal notranslate"><span class="pre">home</span></code>, we could write the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">homepageview</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;home&#39;</span><span class="p">)</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>This establishes the link within the application, and we need to connect
+this to the larger project within the base <code class="docutils literal notranslate"><span class="pre">urls.py</span></code> file. This was
+already created with our project, and we want it to read as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">include</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;admin/&#39;</span><span class="p">,</span> <span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">urls</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s1">&#39;pages.urls&#39;</span><span class="p">)),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Now, if we run our server again and navigate to <a class="reference external" href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a>
+we should see the results of our work.</p>
+<div class="figure">
+<img alt="" src="../_images/wonderfuls.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Code Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jacob Frias Koehler, PhD.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/content/11-django-intro.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

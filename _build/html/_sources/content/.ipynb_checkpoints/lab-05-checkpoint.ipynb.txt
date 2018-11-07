@@ -1,0 +1,47 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Web Design\n",
+    "\n",
+    "In this lab, you will use our starting Django application to build a polling site.  The website will extend the polling application to ask specific questions about an area of interest to you.  You should build in 10 questions, and add an option for a text write in response.  Your work will be focused on two areas; theming the site and building the questions.  In the next part of the lab, you will deploy your application and collect responses to the questions.\n",
+    "\n",
+    "Here, you will find a copy of the base site as a `.zip` file.  You can unzip this, launch a virtual enviornment in the project and install Django.  Then, the `python manage.py runserver` should give you a site like the image below:\n",
+    "\n",
+    "![](images/cover_site.png)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Your aim is to theme this site, and add some better questions than what we've got at present. (Polls link!)\n",
+    "\n",
+    "![](images/poll_start.png)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

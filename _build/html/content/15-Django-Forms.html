@@ -1,0 +1,246 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Django Forms &#8212; Code Toolkit Fall 2018 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="Django-Forms">
+<h1>Django Forms<a class="headerlink" href="#Django-Forms" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">polls/templates/polls/detail.html</span></code></p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ question.question_text }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+
+{% if error_message %}<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>{{ error_message }}<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>{% endif %}
+
+<span class="p">&lt;</span><span class="nt">form</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;{% url &#39;polls:vote&#39; question.id %}&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;post&quot;</span><span class="p">&gt;</span>
+{% csrf_token %}
+{% for choice in question.choice_set.all %}
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;choice&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;choice{{ forloop.counter }}&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{ choice.id }}&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;choice{{ forloop.counter }}&quot;</span><span class="p">&gt;</span>{{ choice.choice_text }}<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+{% endfor %}
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Vote&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="Process-Data-with-View">
+<h2>Process Data with View<a class="headerlink" href="#Process-Data-with-View" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span><span class="p">,</span> <span class="n">HttpResponseRedirect</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">get_object_or_404</span><span class="p">,</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Choice</span><span class="p">,</span> <span class="n">Question</span>
+<span class="c1"># ...</span>
+<span class="k">def</span> <span class="nf">vote</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">question_id</span><span class="p">):</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Question</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">question_id</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">selected_choice</span> <span class="o">=</span>
+        <span class="c1">#request.POST is a dictionary-like object that lets you access submitted data by key name. In this case, request.POST[&#39;choice&#39;] returns the ID of the selected choice, as a string. request.POST values are always strings.</span>
+        <span class="n">question</span><span class="o">.</span><span class="n">choice_set</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="p">[</span><span class="s1">&#39;choice&#39;</span><span class="p">])</span>
+        <span class="c1">#request.POST[&#39;choice&#39;] will raise KeyError if choice wasn’t provided in POST data. The below code checks for KeyError and redisplays the question form with an error message if choice isn’t given.</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="n">Choice</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">):</span>
+        <span class="c1"># Redisplay the question voting form.</span>
+        <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;polls/detail.html&#39;</span><span class="p">,</span> <span class="p">{</span>
+            <span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span>
+            <span class="s1">&#39;error_message&#39;</span><span class="p">:</span> <span class="s2">&quot;You didn&#39;t select a choice.&quot;</span><span class="p">,</span>
+        <span class="p">})</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">selected_choice</span><span class="o">.</span><span class="n">votes</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">selected_choice</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        <span class="c1"># Always return an HttpResponseRedirect after successfully dealing</span>
+        <span class="c1"># with POST data. This prevents data from being posted twice if a</span>
+        <span class="c1"># user hits the Back button.</span>
+        <span class="k">return</span> <span class="n">HttpResponseRedirect</span><span class="p">(</span><span class="n">reverse</span><span class="p">(</span><span class="s1">&#39;polls:results&#39;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">question</span><span class="o">.</span><span class="n">id</span><span class="p">,)))</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">polls/views.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">get_object_or_404</span><span class="p">,</span> <span class="n">render</span>
+
+
+<span class="k">def</span> <span class="nf">results</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">question_id</span><span class="p">):</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">get_object_or_404</span><span class="p">(</span><span class="n">Question</span><span class="p">,</span> <span class="n">pk</span><span class="o">=</span><span class="n">question_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s1">&#39;polls/results.html&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">polls/templates/polls/results.html</span></code></p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>{{ question.question_text }}<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+{% for choice in question.choice_set.all %}
+    <span class="p">&lt;</span><span class="nt">li</span><span class="p">&gt;</span>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}<span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+{% endfor %}
+<span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{% url &#39;polls:detail&#39; question.id %}&quot;</span><span class="p">&gt;</span>Vote again?<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">polls/urls.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">app_name</span> <span class="o">=</span> <span class="s1">&#39;polls&#39;</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">IndexView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;&lt;int:pk&gt;/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">DetailView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;detail&#39;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;&lt;int:pk&gt;/results/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">ResultsView</span><span class="o">.</span><span class="n">as_view</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;results&#39;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s1">&#39;&lt;int:question_id&gt;/vote/&#39;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">vote</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;vote&#39;</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">polls/views.py</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponseRedirect</span>
+<span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">get_object_or_404</span><span class="p">,</span> <span class="n">render</span>
+<span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">reverse</span>
+<span class="kn">from</span> <span class="nn">django.views</span> <span class="kn">import</span> <span class="n">generic</span>
+
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Choice</span><span class="p">,</span> <span class="n">Question</span>
+
+
+<span class="k">class</span> <span class="nc">IndexView</span><span class="p">(</span><span class="n">generic</span><span class="o">.</span><span class="n">ListView</span><span class="p">):</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;polls/index.html&#39;</span>
+    <span class="n">context_object_name</span> <span class="o">=</span> <span class="s1">&#39;latest_question_list&#39;</span>
+
+    <span class="k">def</span> <span class="nf">get_queryset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the last five published questions.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Question</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;-pub_date&#39;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">DetailView</span><span class="p">(</span><span class="n">generic</span><span class="o">.</span><span class="n">DetailView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Question</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;polls/detail.html&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">ResultsView</span><span class="p">(</span><span class="n">generic</span><span class="o">.</span><span class="n">DetailView</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Question</span>
+    <span class="n">template_name</span> <span class="o">=</span> <span class="s1">&#39;polls/results.html&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">vote</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">question_id</span><span class="p">):</span>
+    <span class="o">...</span> <span class="c1"># same as above, no changes needed.</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Code Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-Installations.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Intro-to-Data.html">Introduction to Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-UNIX-and-Terminal.html">Command Line and UNIX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-Introduction-to-Python.html">Introduction to Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-Exploring-with-Pandas.html">Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Pandas-and-Matplotlib.html">Important Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Folium.html">Mapping Data with Folium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Beautiful-Soup-Scraping.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Intro-Spacy.html">spaCy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-django-intro.html">Django Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-Django-templates.html">Templates and Bootstrap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Django-Models-Blogs.html">Django Models: Building a Blog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Django-Poll-I.html">Making a Polling Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Django-Style.html">Styling the Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-NaiveBayes.html">Naive Bayes Classifier</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-deployment-with-Flask.html">Introduction to Flask</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-deployment-with-Flask.html#Hello,-world.">Hello, world.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17-deployment-with-Flask.html#Add-in-machine-learning">Add in machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab_01.html">Exploring Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab_02-policin.html">Investigating Stop and Frisk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab_03-mappin-gardens.html">Folium and Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab_04.html">Lab 04: Scraping Reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab-05.html">Web Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab-06.html">Polls II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab-07.html">FLASK App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab-08.html">Learning Application</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jacob Frias Koehler, PhD.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/content/15-Django-Forms.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

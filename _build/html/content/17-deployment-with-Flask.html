@@ -1,0 +1,618 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction to Flask &#8212; Code Toolkit Fall 2018 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Exploring Data" href="lab_01.html" />
+    <link rel="prev" title="Naive Bayes Classifier" href="16-NaiveBayes.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Introduction-to-Flask">
+<h1>Introduction to Flask<a class="headerlink" href="#Introduction-to-Flask" title="Permalink to this headline">¶</a></h1>
+<div class="figure" id="id1">
+<img alt="flask logo" src="http://flask.pocoo.org/static/logo/flask.png" />
+<p class="caption"><span class="caption-text">flask logo</span></p>
+</div>
+<p>Flask is a fast, lightweight way to connect your Python scripts to a
+server. It’s a simple and robust framework that can do small tasks
+(create a microblog, stand up a simple API) or complex ones (Pinterest’s
+API, create a twitter clone).</p>
+<p>Let’s jump in with a simple example. Then, we’ll expand it to show what
+it can do with your models. But first you may need to:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install Flask
+</pre></div>
+</div>
+</div>
+<div class="section" id="Hello,-world.">
+<h1>Hello, world.<a class="headerlink" href="#Hello,-world." title="Permalink to this headline">¶</a></h1>
+<p>Create a new file called <code class="docutils literal notranslate"><span class="pre">hello.py</span></code> . Type in this code line by line.
+No copy pasting!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">flask</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;Hello World!&quot;</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Three things happen here: - initialize the app - use built-in
+decorators* to define what happens on a page - launch the app</p>
+<p>* I’ll explain soon…</p>
+<p>Now launch the file from your command line:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ python hello.py
+* Running on http://127.0.0.1:5000/ <span class="o">(</span>Press CTRL+C to quit<span class="o">)</span>
+</pre></div>
+</div>
+<p>Go to that URL<span class="math notranslate nohighlight">\(^*\)</span> in your browser to see your app running on
+your <code class="docutils literal notranslate"><span class="pre">localhost</span></code>. (Or use <code class="docutils literal notranslate"><span class="pre">curl</span></code>!)</p>
+<p><span class="math notranslate nohighlight">\(^*\)</span> <strong>Your port may not be 5000. There may also be a longer URL
+which you need to copy-paste exactly.</strong></p>
+<div class="section" id="Arguments-and-styling">
+<h2>Arguments and styling<a class="headerlink" href="#Arguments-and-styling" title="Permalink to this headline">¶</a></h2>
+<p>Add the following route underneath the hello() function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/greet/&lt;name&gt;&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Say hello to your first parameter&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="s2">&quot;Hello, {}!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Save, and the app should automatically restart; if it doesn’t, you can
+<code class="docutils literal notranslate"><span class="pre">ctrl-C</span></code> and launch it again yourself. Now navigate to
+<code class="docutils literal notranslate"><span class="pre">http://127.0.0.1:5000/greet/Roger</span></code>. Your function should respond to
+that input!</p>
+</div>
+<div class="section" id="Decorators">
+<h2>Decorators<a class="headerlink" href="#Decorators" title="Permalink to this headline">¶</a></h2>
+<p>What’s a decorator? The short story: they put wrap one function around
+another. So the previous function is actually:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="n">greet</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>See the Further Reading section for a full tutorial. For now, we just
+need to know that the <code class="docutils literal notranslate"><span class="pre">&#64;app.route(endpoint)</span></code> pattern is how you tell
+Flask to listen to a particular URL, and what to do if requests are sent
+there.</p>
+<p>Since the <code class="docutils literal notranslate"><span class="pre">return</span></code> statement sends text to an HTML page, you can style
+it with HTML tags:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@app.route</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    &lt;body&gt;</span>
+<span class="s1">    &lt;h2&gt; Hello World! &lt;h2&gt;</span>
+<span class="s1">    &lt;/body&gt;</span>
+<span class="s1">    &#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<p>(If you make any coding mistakes, your server may shut down with an
+error message. Fix the code and rerun!)</p>
+</div>
+</div>
+<div class="section" id="Add-in-machine-learning">
+<h1>Add in machine learning<a class="headerlink" href="#Add-in-machine-learning" title="Permalink to this headline">¶</a></h1>
+<p>We can use Flask to share our machine learning predictions.</p>
+<p>Create a new file <code class="docutils literal notranslate"><span class="pre">application.py</span></code>. Import and initialize the flask
+app, and launch the server at the bottom. Leave room in the middle to
+add in your model and routes later on.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">flask</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1">#-------- MODEL GOES HERE -----------#</span>
+
+<span class="c1">#-------- ROUTES GO HERE -----------#</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="sd">&#39;&#39;&#39;Connects to the server&#39;&#39;&#39;</span>
+
+    <span class="n">HOST</span> <span class="o">=</span> <span class="s1">&#39;127.0.0.1&#39;</span>
+    <span class="n">PORT</span> <span class="o">=</span> <span class="s1">&#39;4000&#39;</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that this time we specifed the host and port we want the app to run
+on.</p>
+<div class="section" id="Deploying-an-SMS-spam-detector">
+<h2>Deploying an SMS spam detector<a class="headerlink" href="#Deploying-an-SMS-spam-detector" title="Permalink to this headline">¶</a></h2>
+<p>Here’s an idea for a first ML app: something to identify text message
+spam.</p>
+<p>You already know how to make this! Let’s hook it up to an endpoint.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="k">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="k">import</span> <span class="n">MultinomialNB</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/SMSSpamCollection.txt&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">cvec</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">,</span> <span class="n">max_features</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">cvec</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>MultinomialNB(alpha=1.0, class_prior=None, fit_prior=True)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Can I interest you in a new blender? I need your credit card number and social security number.&#39;</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">X_new</span> <span class="o">=</span> <span class="n">cvec</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">score</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[15]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([&#39;ham&#39;], dtype=&#39;&lt;U4&#39;)
+</pre></div>
+</div>
+</div>
+<p>Import the libraries we need, load our SMS spam dataset from the NLP
+lesson, and define our target and feature variables.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#-------- MODEL GOES HERE -----------#</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/SMSSpamCollection.txt&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="s1">&#39;msg&#39;</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Now vectorize the features (with help from TfidfVectorizer) and fit a
+Naive Bayes model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tfidf, filter stop words, 300 features</span>
+<span class="n">cvec</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">,</span> <span class="n">max_features</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">cvec</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Make-a-simple-API">
+<h2>Make a simple API<a class="headerlink" href="#Make-a-simple-API" title="Permalink to this headline">¶</a></h2>
+<p>Here’s the fun part. Now that we have a classifier, we need to get some
+values to make our predictions.</p>
+<p>One way to do this is to get information from the <strong>URL parameters</strong>.
+These are the part of a URL that come after the <code class="docutils literal notranslate"><span class="pre">?</span></code> and are matched by
+key:value pairs. For example, if you navigate to
+<code class="docutils literal notranslate"><span class="pre">http://localhost:4000/is_spam?msg=&quot;50%</span> <span class="pre">off</span> <span class="pre">fidget</span> <span class="pre">spinners!&quot;</span></code> Flask
+can retrieve that message data for you. Let’s write a route to do just
+that:</p>
+<p>This will look for a <code class="docutils literal notranslate"><span class="pre">GET</span></code> request containing a <code class="docutils literal notranslate"><span class="pre">msg</span></code> key at the
+<code class="docutils literal notranslate"><span class="pre">/is_spam</span></code> endpoint.</p>
+<p>So visiting
+<code class="docutils literal notranslate"><span class="pre">http://localhost:4000/is_spam?msg=&quot;50%</span> <span class="pre">off</span> <span class="pre">fidget</span> <span class="pre">spinners!&quot;</span></code> will
+set <code class="docutils literal notranslate"><span class="pre">flask.request.args['msg']</span></code> to “50% off fidget spinners!”. Then we
+transform this into something the model can read.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#-------- ROUTES GO HERE -----------#</span>
+<span class="nd">@app.route</span><span class="p">(</span><span class="s1">&#39;/is_spam&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">is_spam</span><span class="p">():</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;msg&#39;</span><span class="p">])</span>
+    <span class="n">X_new</span> <span class="o">=</span> <span class="n">cvec</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;prediction&#39;</span><span class="p">:</span> <span class="n">score</span><span class="p">[</span><span class="mi">0</span><span class="p">]}</span>
+    <span class="k">return</span> <span class="n">flask</span><span class="o">.</span><span class="n">jsonify</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And… voila! Save the file. Launch your app. (Give it 5-10 seconds to
+start.) You now have a simple API for your model. Try visiting:</p>
+<p><code class="docutils literal notranslate"><span class="pre">http://localhost:4000/is_spam?msg=&quot;50%</span> <span class="pre">off</span> <span class="pre">fidget</span> <span class="pre">spinners!&quot;</span></code></p>
+<p>Or</p>
+<p><code class="docutils literal notranslate"><span class="pre">http://localhost:4000/is_spam?msg=&quot;pick</span> <span class="pre">up</span> <span class="pre">milk</span> <span class="pre">at</span> <span class="pre">the</span> <span class="pre">store&quot;</span></code></p>
+<p>Play with the message in the URL. You should get a single prediction of
+spam or ham in neatly formatted JSON. (<code class="docutils literal notranslate"><span class="pre">localhost</span></code> is just a variable
+set to 127.0.0.1 by default.)</p>
+</div>
+<div class="section" id="Problems">
+<h2>Problems<a class="headerlink" href="#Problems" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Build a new Flask application using our <code class="docutils literal notranslate"><span class="pre">pitchfork.json</span></code> data that
+takes in a genre and returns the top 10 reviews for the genre.</li>
+<li>Add a second field to take in a year to search by. Demonstrate your
+application works by finding the top 10 electronic records of 2013.</li>
+</ol>
+<div class="section" id="Further-reading">
+<h3>Further reading<a class="headerlink" href="#Further-reading" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="Flask">
+<h2>Flask<a class="headerlink" href="#Flask" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://flask.pocoo.org/docs/0.11/">The Flask Documentation</a></li>
+<li><a class="reference external" href="https://github.com/miguelgrinberg/flask-pycon2014">A Flask tutorial to follow along
+with</a></li>
+<li><a class="reference external" href="https://code.tutsplus.com/tutorials/an-introduction-to-pythons-flask-framework--net-28822">Another tutorial that gets into CSS
+styling</a></li>
+<li><a class="reference external" href="http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-ii-templates">The Flask mega
+tutorial</a></li>
+<li><a class="reference external" href="https://stackoverflow.com/questions/12269537/is-the-server-bundled-with-flask-safe-to-use-in-production">Flask’s development server is not for
+production</a></li>
+<li><a class="reference external" href="http://bathompso.com/blog/Flask-AWS-Setup/">Setting up Flask on AWS
+EC2</a>. This should be
+your next step if you want to share your model with the world!</li>
+<li><a class="reference external" href="http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/">A great guide to those weird
+“decorators”</a>.</li>
+</ul>
+</div>
+<div class="section" id="Production-coding">
+<h2>Production coding<a class="headerlink" href="#Production-coding" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Add
+<a class="reference external" href="https://fangpenlin.com/posts/2012/08/26/good-logging-practice-in-python/">logging</a>
+to your code; you’ll be very glad you did.</li>
+<li>Think ahead and include <a class="reference external" href="https://eli.thegreenplace.net/2008/08/21/robust-exception-handling/">error
+handling</a>,
+via <a class="reference external" href="https://jeffknupp.com/blog/2013/02/06/write-cleaner-python-use-exceptions/">try/except
+clauses</a></li>
+<li>Get more comfortable with git, including <a class="reference external" href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow">feature
+branching</a>.</li>
+<li>Include <a class="reference external" href="http://www.diveintopython.net/unit_testing/index.html">unit
+tests</a>; the
+<a class="reference external" href="http://pythontesting.net/framework/pytest/pytest-introduction/">pytest
+module</a>
+is great.</li>
+<li><a class="reference external" href="http://zetcode.com/db/sqlitepythontutorial/">Integrate
+databases</a>!</li>
+<li>Beware technical debt, especially <a class="reference external" href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43146.pdf">machine learning technical
+debt</a>.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Code Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01-Introduction-Installations.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-Intro-to-Data.html">Introduction to Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-UNIX-and-Terminal.html">Command Line and UNIX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-Introduction-to-Python.html">Introduction to Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-Exploring-with-Pandas.html">Exploratory Data Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-Pandas-and-Matplotlib.html">Important Libraries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-Folium.html">Mapping Data with Folium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-Beautiful-Soup-Scraping.html">Introduction to Web Scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-Intro-Spacy.html">spaCy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-django-intro.html">Django Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-Django-templates.html">Templates and Bootstrap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-Django-Models-Blogs.html">Django Models: Building a Blog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-Django-Poll-I.html">Making a Polling Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-Django-Style.html">Styling the Application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16-NaiveBayes.html">Naive Bayes Classifier</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction to Flask</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#Hello,-world.">Hello, world.</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Arguments-and-styling">Arguments and styling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Decorators">Decorators</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Add-in-machine-learning">Add in machine learning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Deploying-an-SMS-spam-detector">Deploying an SMS spam detector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Make-a-simple-API">Make a simple API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Problems">Problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Flask">Flask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Production-coding">Production coding</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lab_01.html">Exploring Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab_02-policin.html">Investigating Stop and Frisk</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab_03-mappin-gardens.html">Folium and Mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab_04.html">Lab 04: Scraping Reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab-05.html">Web Design</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab-06.html">Polls II</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab-07.html">FLASK App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lab-08.html">Learning Application</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="16-NaiveBayes.html" title="previous chapter">Naive Bayes Classifier</a></li>
+      <li>Next: <a href="lab_01.html" title="next chapter">Exploring Data</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Jacob Frias Koehler, PhD.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/content/17-deployment-with-Flask.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,491 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import glob\n",
+    "import nltk\n",
+    "from string import punctuation\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "text=open('articles/jrme_test.txt','r').read()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#tokenizer.tokenize(text)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "' \\n Chapter 1: Making Mathematics Work in School\\n\\nAuthor(s): Deborah Loewenberg Ball, Jennifer Lewis '"
+      ]
+     },
+     "execution_count": 38,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "text[:100]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "male_words=set(['guy','spokesman','chairman',\"men's\",'men','him',\"he's\",'his','boy','boyfriend','boyfriends','boys','brother','brothers','dad','dads','dude','father','fathers','fiance','gentleman','gentlemen','god','grandfather','grandpa','grandson','groom','he','himself','husband','husbands','king','male','man','mr','nephew','nephews','priest','prince','son','sons','uncle','uncles','waiter','widower','widowers'])\n",
+    "female_words=set(['heroine','spokeswoman','chairwoman',\"women's\",'actress','women',\"she's\",'her','aunt','aunts','bride','daughter','daughters','female','fiancee','girl','girlfriend','girlfriends','girls','goddess','granddaughter','grandma','grandmother','herself','ladies','lady','lady','mom','moms','mother','mothers','mrs','ms','niece','nieces','priestess','princess','queens','she','sister','sisters','waitress','widow','widows','wife','wives','woman'])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 72,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def gender_the_sentence(sentence_words):\n",
+    "    mw_length=len(male_words.intersection(sentence_words))\n",
+    "    fw_length=len(female_words.intersection(sentence_words))\n",
+    "\n",
+    "    if mw_length>0 and fw_length==0:\n",
+    "        gender='male'\n",
+    "    elif mw_length==0 and fw_length>0: \n",
+    "        gender='female'\n",
+    "    elif mw_length>0 and fw_length>0: \n",
+    "        gender='both'\n",
+    "    else:\n",
+    "        gender='none'\n",
+    "    return gender"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 73,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def is_it_proper(word):\n",
+    "        if word[0]==word[0].upper():\n",
+    "            case='upper'\n",
+    "        else:\n",
+    "            case='lower'\n",
+    "        \n",
+    "        word_lower=word.lower()\n",
+    "        try:\n",
+    "            proper_nouns[word_lower][case] = proper_nouns[word_lower].get(case,0)+1\n",
+    "        \n",
+    "        except Exception:\n",
+    "            #This is triggered when the word hasn't been seen yet\n",
+    "            proper_nouns[word_lower]= {case:1}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 74,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def increment_gender(sentence_words,gender):\n",
+    "    sentence_counter[gender]+=1\n",
+    "    word_counter[gender]+=len(sentence_words)\n",
+    "    for word in sentence_words:\n",
+    "        word_freq[gender][word]=word_freq[gender].get(word,0)+1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 75,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sexes=['male','female','none','both']\n",
+    "sentence_counter={sex:0 for sex in sexes}\n",
+    "word_counter={sex:0 for sex in sexes}\n",
+    "word_freq={sex:{} for sex in sexes}\n",
+    "proper_nouns={}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 76,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "file_list = glob.glob('articles/*.txt')\n",
+    "for filename in file_list:\n",
+    "    text=open(filename,'rt', errors = 'ignore').read()\n",
+    "    \n",
+    "    #Split into sentences\n",
+    "    sentences=tokenizer.tokenize(text)\n",
+    "    \n",
+    "    for sentence in sentences:\n",
+    "        #word tokenize and strip punctuation\n",
+    "            sentence_words=sentence.split()\n",
+    "            sentence_words=[w.strip(punctuation) for w in sentence_words \n",
+    "                            if len(w.strip(punctuation))>0]\n",
+    "            \n",
+    "            #figure out how often each word is capitalized\n",
+    "            [is_it_proper(word) for word in sentence_words[1:]]\n",
+    "\n",
+    "            #lower case it\n",
+    "            sentence_words=set([w.lower() for w in sentence_words])\n",
+    "            \n",
+    "            #Figure out if there are gendered words in the sentence by computing the length of the intersection of the sets\n",
+    "            gender=gender_the_sentence(sentence_words)\n",
+    "\n",
+    "            #Increment some counters\n",
+    "            increment_gender(sentence_words,gender)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 77,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "proper_nouns=set([word for word in proper_nouns if  \n",
+    "                  proper_nouns[word].get('upper',0) / \n",
+    "                  (proper_nouns[word].get('upper',0) + \n",
+    "                   proper_nouns[word].get('lower',0))>.50])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 78,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "common_words=set([w for w in sorted (word_freq['female'],\n",
+    "                                     key=word_freq['female'].get,reverse=True)[:1000]]+[w for w in sorted (word_freq['male'],key=word_freq['male'].get,reverse=True)[:1000]])\n",
+    "\n",
+    "common_words=list(common_words-male_words-female_words-proper_nouns)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 79,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "male_percent={word:(word_freq['male'].get(word,0) / word_counter['male']) \n",
+    "              / (word_freq['female'].get(word,0) / word_counter['female']+word_freq['male'].get(word,0)/word_counter['male']) for word in common_words}"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 80,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "14.4% gendered\n",
+      "207 sentences about men.\n",
+      "471 sentences about women.\n",
+      "0.4 sentences about men for each sentence about women.\n"
+     ]
+    }
+   ],
+   "source": [
+    "print( '%.1f%% gendered' % (100*(sentence_counter['male']+sentence_counter['female'])/(sentence_counter['male']+sentence_counter['female']+sentence_counter['both']+sentence_counter['none'])))\n",
+    "print( '%s sentences about men.' % sentence_counter['male'])\n",
+    "print( '%s sentences about women.' % sentence_counter['female'])\n",
+    "print( '%.1f sentences about men for each sentence about women.' % (sentence_counter['male']/sentence_counter['female']))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 81,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Male words\n",
+      "Ratio\tMale\tFemale\tWord\n",
+      "100.0\t01\t00\tbehavior\n",
+      "100.0\t01\t00\trefrained\n",
+      "100.0\t01\t00\tappreciate\n",
+      "100.0\t01\t00\tscientists\n",
+      "100.0\t01\t00\tincites\n",
+      "100.0\t01\t00\ttwos).8\n",
+      "100.0\t01\t00\tinterpretation\n",
+      "100.0\t02\t00\trevises\n",
+      "100.0\t01\t00\tunstable\n",
+      "100.0\t01\t00\tpopular\n",
+      "100.0\t01\t00\tthinking-a\n",
+      "100.0\t01\t00\tunderachievement\n",
+      "100.0\t01\t00\tmaterial\n",
+      "100.0\t01\t00\tcouched\n",
+      "100.0\t01\t00\twise\n",
+      "100.0\t01\t00\tbreath\n",
+      "100.0\t01\t00\tterm\n",
+      "100.0\t02\t00\tstudied\n",
+      "100.0\t01\t00\tinsight\n",
+      "100.0\t01\t00\tthree-second\n",
+      "100.0\t01\t00\treorganizes\n",
+      "100.0\t01\t00\ttense\n",
+      "100.0\t01\t00\tcorresponding\n",
+      "100.0\t02\t00\tmeet\n",
+      "100.0\t01\t00\tare'\"2\n",
+      "100.0\t01\t00\tredirecting\n",
+      "100.0\t01\t00\treply\n",
+      "100.0\t03\t00\tthe-1\n",
+      "100.0\t01\t00\ttrain\n",
+      "100.0\t01\t00\tforego\n",
+      "100.0\t02\t00\tdetailed\n",
+      "100.0\t01\t00\tratifies\n",
+      "100.0\t01\t00\tcorrect\n",
+      "100.0\t01\t00\tsuspect\n",
+      "100.0\t01\t00\tsystems\n",
+      "100.0\t01\t00\tallowed\n",
+      "100.0\t01\t00\tsurprising\n",
+      "100.0\t01\t00\tup-front\n",
+      "100.0\t02\t00\tdon't\n",
+      "100.0\t01\t00\tstatement.p\n",
+      "100.0\t01\t00\tarchetypical\n",
+      "100.0\t01\t00\tautism\n",
+      "100.0\t01\t00\tdesignated\n",
+      "100.0\t01\t00\timpressions\n",
+      "100.0\t01\t00\tun\n",
+      "100.0\t01\t00\tpartici\n",
+      "100.0\t01\t00\tmerged\n",
+      "100.0\t01\t00\tteachers-what\n",
+      "100.0\t01\t00\tcordance\n",
+      "100.0\t02\t00\tidentified\n",
+      "\n",
+      "\n",
+      "\n",
+      "Female words\n",
+      "Ratio\tMale\tFemale\tWord\n",
+      "100.0\t0\t6\thadn't\n",
+      "100.0\t0\t2\tfeel\n",
+      "100.0\t0\t2\tminority\n",
+      "100.0\t0\t2\tclarifier\n",
+      "100.0\t0\t4\tlikely\n",
+      "100.0\t0\t6\tsion\n",
+      "100.0\t0\t2\ttension\n",
+      "100.0\t0\t2\torientation\n",
+      "100.0\t0\t2\treasoner\n",
+      "100.0\t0\t2\twrites\n",
+      "100.0\t0\t2\teventually\n",
+      "100.0\t0\t2\tdown\n",
+      "100.0\t0\t2\tspoken\n",
+      "100.0\t0\t5\tconditions\n",
+      "100.0\t0\t2\tdescribe\n",
+      "100.0\t0\t4\tstating\n",
+      "100.0\t0\t2\tfinding\n",
+      "100.0\t0\t2\tgrad\n",
+      "100.0\t0\t2\tfocus\n",
+      "100.0\t0\t2\treturned\n",
+      "100.0\t0\t2\trelinquish\n",
+      "100.0\t0\t2\tspeakers\n",
+      "100.0\t0\t4\troom\n",
+      "100.0\t0\t4\taware\n",
+      "100.0\t0\t4\tp\n",
+      "100.0\t0\t2\tsent\n",
+      "100.0\t0\t2\texpected\n",
+      "100.0\t0\t3\tformat\n",
+      "100.0\t0\t3\tmoving\n",
+      "100.0\t0\t2\tseen\n",
+      "100.0\t0\t3\tsaw\n",
+      "100.0\t0\t2\tvarious\n",
+      "100.0\t0\t2\tassumptions\n",
+      "100.0\t0\t1\tdiscussion-intensive\n",
+      "100.0\t0\t2\tcredit\n",
+      "100.0\t0\t2\tcontains\n",
+      "100.0\t0\t2\thearing\n",
+      "100.0\t0\t3\tattending\n",
+      "100.0\t0\t3\tavailable\n",
+      "100.0\t0\t3\tconsidered\n",
+      "100.0\t0\t8\tchapter\n",
+      "100.0\t0\t2\tsequence\n",
+      "100.0\t0\t3\tindividual\n",
+      "100.0\t0\t2\tinterest\n",
+      "100.0\t0\t2\teveryday\n",
+      "100.0\t0\t12\tlearning\n",
+      "100.0\t0\t2\twe're\n",
+      "100.0\t0\t2\tready\n",
+      "100.0\t0\t3\tplans\n",
+      "100.0\t0\t2\tadditionally\n"
+     ]
+    }
+   ],
+   "source": [
+    "header ='Ratio\\tMale\\tFemale\\tWord'\n",
+    "print( 'Male words')\n",
+    "print( header)\n",
+    "for word in sorted (male_percent,key=male_percent.get,reverse=True)[:50]:\n",
+    "    try:\n",
+    "        ratio=male_percent[word]/(1-male_percent[word])\n",
+    "    except:\n",
+    "        ratio=100\n",
+    "    print( '%.1f\\t%02d\\t%02d\\t%s' % (ratio,word_freq['male'].get(word,0),word_freq['female'].get(word,0),word))\n",
+    "\n",
+    "print( '\\n'*2)\n",
+    "print( 'Female words')\n",
+    "print( header)\n",
+    "for word in sorted (male_percent,key=male_percent.get,reverse=False)[:50]:\n",
+    "    try:\n",
+    "        ratio=(1-male_percent[word])/male_percent[word]\n",
+    "    except:\n",
+    "        ratio=100\n",
+    "    print( '%.1f\\t%01d\\t%01d\\t%s' % (ratio,word_freq['male'].get(word,0),word_freq['female'].get(word,0),word))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import spacy\n",
+    "\n",
+    "nlp = spacy.load('en_core_web_sm')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "doc = nlp(\"You are the worst.  This is the best\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "You are the worst.  \n",
+      "This is the best\n"
+     ]
+    }
+   ],
+   "source": [
+    "for i in doc.sents:\n",
+    "    print(i)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0.0\n",
+      "0.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "for i in doc.sents:\n",
+    "    print(i.sentiment)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.0"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "doc.sentiment"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "()"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
