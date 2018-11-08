@@ -7,7 +7,7 @@ Welcome to Code Toolkit's documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    content/01-Introduction-Installations.ipynb
@@ -27,6 +27,8 @@ Welcome to Code Toolkit's documentation!
    content/16-NaiveBayes.ipynb
    content/17-deployment-with-Flask.ipynb
 
+.. toctree::
+   :maxdepth: 1
    :caption: Labs
 
    content/lab_01.ipynb

@@ -2,7 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e523c3a2-6fc7-4bc7-b79c-96f7f2477d1e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/_build/doctrees/environment.pickle" afterPath="$PROJECT_DIR$/_build/doctrees/environment.pickle" />
+      <change beforePath="$PROJECT_DIR$/_build/doctrees/index.doctree" afterPath="$PROJECT_DIR$/_build/doctrees/index.doctree" />
+      <change beforePath="$PROJECT_DIR$/_build/html/.buildinfo" afterPath="$PROJECT_DIR$/_build/html/.buildinfo" />
+      <change beforePath="$PROJECT_DIR$/_build/html/_sources/index.rst.txt" afterPath="$PROJECT_DIR$/_build/html/_sources/index.rst.txt" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/01-Introduction-Installations.html" afterPath="$PROJECT_DIR$/_build/html/content/01-Introduction-Installations.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/02-Intro-to-Data.html" afterPath="$PROJECT_DIR$/_build/html/content/02-Intro-to-Data.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/03-UNIX-and-Terminal.html" afterPath="$PROJECT_DIR$/_build/html/content/03-UNIX-and-Terminal.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/04-Introduction-to-Python.html" afterPath="$PROJECT_DIR$/_build/html/content/04-Introduction-to-Python.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/05-Exploring-with-Pandas.html" afterPath="$PROJECT_DIR$/_build/html/content/05-Exploring-with-Pandas.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/06-Pandas-and-Matplotlib.html" afterPath="$PROJECT_DIR$/_build/html/content/06-Pandas-and-Matplotlib.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/07-Folium.html" afterPath="$PROJECT_DIR$/_build/html/content/07-Folium.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/08-Beautiful-Soup-Scraping.html" afterPath="$PROJECT_DIR$/_build/html/content/08-Beautiful-Soup-Scraping.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/09-Intro-Spacy.html" afterPath="$PROJECT_DIR$/_build/html/content/09-Intro-Spacy.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/11-django-intro.html" afterPath="$PROJECT_DIR$/_build/html/content/11-django-intro.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/12-Django-templates.html" afterPath="$PROJECT_DIR$/_build/html/content/12-Django-templates.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/13-Django-Models-Blogs.html" afterPath="$PROJECT_DIR$/_build/html/content/13-Django-Models-Blogs.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/14-Django-Poll-I.html" afterPath="$PROJECT_DIR$/_build/html/content/14-Django-Poll-I.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/15-Django-Forms.html" afterPath="$PROJECT_DIR$/_build/html/content/15-Django-Forms.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/15-Django-Style.html" afterPath="$PROJECT_DIR$/_build/html/content/15-Django-Style.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/16-NaiveBayes.html" afterPath="$PROJECT_DIR$/_build/html/content/16-NaiveBayes.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/17-deployment-with-Flask.html" afterPath="$PROJECT_DIR$/_build/html/content/17-deployment-with-Flask.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/act-01-gapminder-probs.html" afterPath="$PROJECT_DIR$/_build/html/content/act-01-gapminder-probs.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/act-01-gapminder-solns.html" afterPath="$PROJECT_DIR$/_build/html/content/act-01-gapminder-solns.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/lab-05.html" afterPath="$PROJECT_DIR$/_build/html/content/lab-05.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/lab-06.html" afterPath="$PROJECT_DIR$/_build/html/content/lab-06.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/lab-07.html" afterPath="$PROJECT_DIR$/_build/html/content/lab-07.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/lab-08.html" afterPath="$PROJECT_DIR$/_build/html/content/lab-08.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/lab_01.html" afterPath="$PROJECT_DIR$/_build/html/content/lab_01.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/lab_02-policin.html" afterPath="$PROJECT_DIR$/_build/html/content/lab_02-policin.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/lab_03-mappin-gardens.html" afterPath="$PROJECT_DIR$/_build/html/content/lab_03-mappin-gardens.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/lab_04.html" afterPath="$PROJECT_DIR$/_build/html/content/lab_04.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/content/syllabus.html" afterPath="$PROJECT_DIR$/_build/html/content/syllabus.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/gender_jrme.html" afterPath="$PROJECT_DIR$/_build/html/gender_jrme.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/genindex.html" afterPath="$PROJECT_DIR$/_build/html/genindex.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/index.html" afterPath="$PROJECT_DIR$/_build/html/index.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/search.html" afterPath="$PROJECT_DIR$/_build/html/search.html" />
+      <change beforePath="$PROJECT_DIR$/_build/html/searchindex.js" afterPath="$PROJECT_DIR$/_build/html/searchindex.js" />
+      <change beforePath="$PROJECT_DIR$/_build/html/syllabus.html" afterPath="$PROJECT_DIR$/_build/html/syllabus.html" />
+      <change beforePath="$PROJECT_DIR$/conf.py" afterPath="$PROJECT_DIR$/conf.py" />
+      <change beforePath="$PROJECT_DIR$/index.rst" afterPath="$PROJECT_DIR$/index.rst" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,8 +56,8 @@
       <file leaf-file-name="index.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="428">
-              <caret line="33" column="11" lean-forward="false" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="32" />
+            <state relative-caret-position="135">
+              <caret line="9" column="15" lean-forward="false" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -26,8 +66,18 @@
       <file leaf-file-name="conf.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/conf.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="59">
-              <caret line="21" column="23" lean-forward="false" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+            <state relative-caret-position="326">
+              <caret line="91" column="22" lean-forward="false" selection-start-line="91" selection-start-column="22" selection-end-line="91" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/_build/html/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -42,7 +92,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
@@ -60,9 +110,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/index.rst" />
         <option value="$PROJECT_DIR$/conf.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
       </list>
     </option>
   </component>
@@ -99,6 +149,22 @@
             <path>
               <item name="toolkit_site" type="b2602c69:ProjectViewProjectNode" />
               <item name="toolkit_site" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="toolkit_site" type="b2602c69:ProjectViewProjectNode" />
+              <item name="toolkit_site" type="462c0819:PsiDirectoryNode" />
+              <item name="_build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="toolkit_site" type="b2602c69:ProjectViewProjectNode" />
+              <item name="toolkit_site" type="462c0819:PsiDirectoryNode" />
+              <item name="_build" type="462c0819:PsiDirectoryNode" />
+              <item name="html" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="toolkit_site" type="b2602c69:ProjectViewProjectNode" />
+              <item name="toolkit_site" type="462c0819:PsiDirectoryNode" />
+              <item name="_static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="toolkit_site" type="b2602c69:ProjectViewProjectNode" />
@@ -247,26 +313,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="33" column="11" lean-forward="false" selection-start-line="33" selection-start-column="11" selection-end-line="33" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/conf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59">
-          <caret line="21" column="23" lean-forward="false" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="15" lean-forward="false" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_static/tool_logo.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/conf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="91" column="22" lean-forward="false" selection-start-line="91" selection-start-column="22" selection-end-line="91" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_build/html/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
