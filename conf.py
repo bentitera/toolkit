@@ -39,10 +39,9 @@ release = 'Fall 2018'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'nbsphinx',
-    'sphinx.ext.mathjax',
+	'nbsphinx',
+	'sphinx.ext.mathjax',
 ]
-exclude_patterns = ['_build', '**.ipynb_checkpoints']
 
 
 # Add any paths that contain templates here, relative to this directory.
@@ -67,7 +66,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '/**.ipynb_checkpoints']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
@@ -90,6 +89,7 @@ html_theme = 'alabaster'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_logo = 'hen.png'
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -105,7 +105,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'CodeToolkitdoc'
+htmlhelp_basename = 'CalculuswithPythondoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -132,7 +132,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'CodeToolkit.tex', 'Code Toolkit Documentation',
+    (master_doc, 'CalculuswithPython.tex', 'Calculus with Python Documentation',
      'Jacob Frias Koehler, PhD', 'manual'),
 ]
 
@@ -142,7 +142,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'codetoolkit', 'Code Toolkit Documentation',
+    (master_doc, 'calculuswithpython', 'Calculus with Python Documentation',
      [author], 1)
 ]
 
@@ -153,8 +153,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'CodeToolkit', 'Code Toolkit Documentation',
-     author, 'CodeToolkit', 'One line description of project.',
+    (master_doc, 'CalculuswithPython', 'Calculus with Python Documentation',
+     author, 'CalculuswithPython', 'One line description of project.',
      'Miscellaneous'),
 ]
 
