@@ -11,592 +11,977 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
+   "execution_count": 1,
    "metadata": {},
    "outputs": [],
    "source": [
-    "import requests"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 20,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "payload = {'key1': 'value1', 'key2': 'value2'}\n",
-    ">>> r = requests.get('https://httpbin.org/get', params=payload)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 21,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "https://httpbin.org/get?key1=value1&key2=value2\n"
-     ]
-    }
-   ],
-   "source": [
-    "print(r.url)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "https://search.azlyrics.com/search.php?q=rod+stewart"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 33,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "payload = {'': 'rod+stewart'}\n",
-    "r = requests.get('https://search.azlyrics.com/search.php?q=', params = payload)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 34,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "https://search.azlyrics.com/search.php?q=&=rod%2Bstewart\n"
-     ]
-    }
-   ],
-   "source": [
-    "print(r.url)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 35,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "base = 'https://search.azlyrics.com/search.php?q='"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 36,
-   "metadata": {},
-   "outputs": [
-    {
-     "name": "stdin",
-     "output_type": "stream",
-     "text": [
-      "Who are you looking for? Rod Stewart\n"
-     ]
-    }
-   ],
-   "source": [
-    "artist = input('Who are you looking for?')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 37,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "'Rod Stewart'"
-      ]
-     },
-     "execution_count": 37,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "artist"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 38,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "'rod stewart'"
-      ]
-     },
-     "execution_count": 38,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "str.lower(artist)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 39,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "['rod', 'stewart']"
-      ]
-     },
-     "execution_count": 39,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "str.split(str.lower(artist))"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 42,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "for i in str.split(str.lower(artist)):\n",
-    "    base = base + '+' + str(i)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 43,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "'https://search.azlyrics.com/search.php?q=+rod+stewart'"
-      ]
-     },
-     "execution_count": 43,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "base"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 44,
-   "metadata": {},
-   "outputs": [],
-   "source": [
+    "import requests\n",
     "from bs4 import BeautifulSoup"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 54,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "def artist_search():\n",
-    "    base = 'https://search.azlyrics.com/search.php?q='\n",
-    "    artist = input('Who are you looking for?')\n",
-    "    for i in str.split(str.lower(artist)):\n",
-    "        base = base + '+' + str(i) + '&w=songs&p=1'\n",
-    "    r = requests.get(base)\n",
-    "    soup = BeautifulSoup(r.text, 'html.parser')\n",
-    "    return soup.url"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 55,
+   "execution_count": 17,
    "metadata": {},
    "outputs": [
     {
-     "name": "stdin",
-     "output_type": "stream",
-     "text": [
-      "Who are you looking for? Rod Stewart\n"
-     ]
+     "data": {
+      "text/html": [
+       "\n",
+       "        <iframe\n",
+       "            width=\"400\"\n",
+       "            height=\"300\"\n",
+       "            src=\"https://www.youtube.com/embed/r8U4s_WAAg8\"\n",
+       "            frameborder=\"0\"\n",
+       "            allowfullscreen\n",
+       "        ></iframe>\n",
+       "        "
+      ],
+      "text/plain": [
+       "<IPython.lib.display.YouTubeVideo at 0x123ebe550>"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
     }
    ],
    "source": [
-    "artist_search()"
+    "from IPython.display import YouTubeVideo\n",
+    "YouTubeVideo('r8U4s_WAAg8')"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 56,
+   "execution_count": 2,
    "metadata": {},
    "outputs": [],
    "source": [
-    "url = 'https://search.azlyrics.com/search.php?q=rod+stewart&w=songs&p=1'"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 57,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "r = requests.get(url)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 58,
-   "metadata": {},
-   "outputs": [],
-   "source": [
+    "url = 'https://www.lyrics.com/artist/Dokken/4110'\n",
+    "r = requests.get(url)\n",
     "soup = BeautifulSoup(r.text, 'html.parser')"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 60,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "<td>\n",
-       "<b>1</b>\n",
-       "<a class=\"btn btn-share btn-nav\" href=\"?q=rod+stewart&amp;w=songs&amp;p=2\">2</a>\n",
-       "<a class=\"btn btn-share btn-nav\" href=\"?q=rod+stewart&amp;w=songs&amp;p=3\">3</a>\n",
-       "<a class=\"btn btn-share btn-nav\" href=\"?q=rod+stewart&amp;w=songs&amp;p=4\">4</a>\n",
-       "<a class=\"btn btn-share btn-nav\" href=\"?q=rod+stewart&amp;w=songs&amp;p=5\">5</a>\n",
-       "<a class=\"btn btn-share btn-nav\" href=\"?q=rod+stewart&amp;w=songs&amp;p=6\">6</a>\n",
-       "<a class=\"btn btn-share btn-nav\" href=\"?q=rod+stewart&amp;w=songs&amp;p=7\">7</a>\n",
-       "<a class=\"btn btn-share btn-nav\" href=\"?q=rod+stewart&amp;w=songs&amp;p=2\"><span class=\"glyphicon glyphicon-chevron-right\"></span></a>\n",
-       "</td>"
-      ]
-     },
-     "execution_count": 60,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "soup.find('td')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 63,
+   "execution_count": 3,
    "metadata": {},
    "outputs": [],
    "source": [
-    "rows = soup.find_all('tr')"
+    "albums = soup.find_all('h3', {'class': 'artist-album-label'})"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 68,
+   "execution_count": 4,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "https://www.azlyrics.com/lyrics/rodstewart/dayathinkimsexy567700.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/astimegoesby.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/onlyaboy.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/lasttrainhome.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/idontwanttotalkaboutit.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/blondeshavemorefun.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/haveitoldyoulately.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/sailing.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/oohlala.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/foreveryoung.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/grace.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/youreinmyheartthefinalacclaim.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/haveyoueverseentherain.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/maggiemay.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/didnti.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/whenineedyou.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/thefirstcutisthedeepest.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/reasontobelieve.html\n",
-      "https://www.azlyrics.com/lyrics/rodstewart/dayathinkimsexy.html\n"
+      "Back in the Streets [1979]\n",
+      "Breaking the Chains [1982]\n",
+      "Tooth and Nail [1984]\n",
+      "Under Lock and Key [1985]\n",
+      "Back for the Attack [1987]\n"
      ]
     }
    ],
    "source": [
-    "for i in rows[2:-1]:\n",
-    "    print(i.a.attrs['href'])"
+    "for i in albums[:5]:\n",
+    "    print(i.text)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 73,
+   "execution_count": 5,
    "metadata": {},
    "outputs": [],
    "source": [
-    "lyr = requests.get(str(rows[2].a.attrs['href']))"
+    "songs = soup.find_all('td', {'class': 'tal qx'})"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 74,
+   "execution_count": 6,
    "metadata": {},
-   "outputs": [],
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Felony\n",
+      "Prisoner [Live]\n",
+      "Breaking the Chains\n",
+      "I Can't See You\n",
+      "In the Middle\n"
+     ]
+    }
+   ],
    "source": [
-    "lyr_soup = BeautifulSoup(lyr.text, 'html.parser')"
+    "for i in songs[::2][:5]:\n",
+    "    print(i.text)"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 75,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "lyr_soup.find('p')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 77,
+   "execution_count": 7,
    "metadata": {},
    "outputs": [
     {
      "data": {
       "text/plain": [
-       "<div id=\"fb-root\"></div>"
+       "'/lyric/41422/Dokken/Felony'"
       ]
      },
-     "execution_count": 77,
+     "execution_count": 7,
      "metadata": {},
      "output_type": "execute_result"
     }
    ],
    "source": [
-    "lyr_soup.div"
+    "songs[0].a.attrs['href']"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 80,
+   "execution_count": 8,
    "metadata": {},
    "outputs": [],
    "source": [
-    "main = lyr_soup.find('div', {'class': 'col-xs-12 col-lg-8 text-center'})"
+    "base = 'https://www.lyrics.com/'"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
-   "metadata": {},
-   "outputs": [],
-   "source": []
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 81,
+   "execution_count": 9,
    "metadata": {},
    "outputs": [],
    "source": [
-    "import re"
+    "lyr = base + songs[0].a.attrs['href']\n",
+    "import pandas as pd"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 147,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [],
    "source": [
-    "regex = re.compile('[^\\s,\\\":\\]\\[?)(]+')"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 148,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "bs4.element.Tag"
-      ]
-     },
-     "execution_count": 148,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "type(main)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 152,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "words = re.findall(regex, main.text)"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 184,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "lyrics = []\n",
-    "sent = ' '\n",
-    "for word in words:\n",
-    "    if word.islower() == True:\n",
-    "        sent = sent + ' ' + word\n",
+    "def lookup():\n",
+    "    artist = input(\"Who you lookin for duder? \")\n",
+    "    if len(artist.split()) < 2:\n",
+    "        url = 'https://www.lyrics.com/artist/' + artist.split(' ')[0].lower() \n",
     "    else:\n",
-    "        sent = sent + '. ' + word\n",
-    "for i in sent.split('.'):\n",
-    "        if i.find('Android'):\n",
+    "        url = 'https://www.lyrics.com/artist/' + artist.split(' ')[0].lower() \n",
+    "    for i in range(1, len(artist.split())):\n",
+    "        url = url + '%20' + artist.split(' ')[i].lower()\n",
+    "    r = requests.get(url)\n",
+    "    soup = BeautifulSoup(r.text, 'html.parser')\n",
+    "    alb = []\n",
+    "    s = []\n",
+    "    ti = []\n",
+    "    albums = soup.find_all('h3', {'class': 'artist-album-label'})\n",
+    "    for i in albums:\n",
+    "        alb.append(i.text)\n",
+    "    songs = soup.find_all('td', {'class': 'tal qx'})\n",
+    "    for i in songs[::2]:\n",
+    "        s.append(i.text)\n",
+    "    for i in songs[1::2]:\n",
+    "        ti.append(i.text)\n",
+    "    base = 'https://www.lyrics.com/'\n",
+    "    l = []\n",
+    "    for i in range(len(songs)):\n",
+    "        if songs[i].a is None:\n",
     "            pass\n",
-    "        elif len(i)>6:\n",
-    "            lyrics.append(i)\n",
     "        else:\n",
-    "            pass\n",
-    "        \n",
-    "        "
+    "            lyr = base + songs[i].a.attrs['href']\n",
+    "            url = lyr\n",
+    "            r = requests.get(url)\n",
+    "            soup = BeautifulSoup(r.text, 'html.parser')\n",
+    "            l.append(soup.find('pre', {'id': 'lyric-body-text'}).text)\n",
+    "    df = pd.DataFrame({'song': s, 'time': ti, 'lyrics': l})\n",
+    "    return df"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 185,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/plain": [
-       "[]"
-      ]
-     },
-     "execution_count": 185,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "/html/body/div[3]/div/div[2]/div[5]"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 175,
+   "execution_count": 11,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      " Sexy lyrics\n",
-      " Stewart\n",
-      " Lyrics\n",
-      " Sexy feat\n",
-      " Oh yeah yeah yeah\n",
-      " She sits alone waiting for suggestions\n",
-      " He's so nervous avoiding all the questions\n",
-      " His lips are dry his heart is gently pounding\n",
-      " Don't you just know exactly what they're thinking\n",
-      " His heart's beating like a drum like a drum\n",
-      " Is he gonna get this girl home\n",
-      " Relax soon baby we'll be all alone\n",
-      " Don't you just know exactly what they're thinking\n",
-      " If you want my body and you think\n",
-      " I'm sexy\n",
-      " Come on sugar tell me so\n",
-      " If you really need me just reach out and touch me\n",
-      " Come on honey tell me so\n",
-      " Stewart\n",
-      " Alright\n",
-      " He's acting shy looking for an answer\n",
-      " Come on honey let's spend the night together\n",
-      " Now hold on a minute before we go much further\n",
-      " Give me a dime so\n",
-      " I can phone my mother\n",
-      " They catch a cab to his high-rise apartment\n",
-      " At last he can tell exactly what his heart meant\n",
-      " If you want my body and you think\n",
-      " I'm sexy\n",
-      " Come on sugar tell me so tell me so\n",
-      " If you really need me just reach out and touch me\n",
-      " Come on honey tell me so\n",
-      " Oh yeah yeah yeah\n",
-      " I like this\n",
-      " I like this\n",
-      " I like this\n",
-      " Stewart\n",
-      " Come on baby spend the night\n",
-      " I promised to behave myself\n",
-      " Oh yeah oh yeah\n",
-      " Yeah yeah yeah\n",
-      " His heart's beating like a drum like a drum\n",
-      " Is he gonna get this girl home is he\n",
-      " We'll soon baby we'll be alone\n",
-      " Don't you just know exactly what they're thinking\n",
-      " If you want my body and you think\n",
-      " I'm sexy\n",
-      " Come on sugar tell me so\n",
-      " If you really need me just reach out and touch me\n",
-      " Come on honey tell me so tell me so\n",
-      " If you really really really need me\n",
-      " Just let me know\n",
-      " Just let me know\n",
-      " If you really need me\n",
-      " If you really really really need me\n",
-      " Just let me know\n",
-      " Just let me know\n",
-      " Oh yeah yeah yeah\n",
-      " /Android|webOS|iPhone|iPod|iPad|BlackBerry|IEMobile|Opera\n",
-      " Mini/i\n",
-      " navigator\n",
-      "userAgent\n",
-      " { document\n",
-      "write '<div style= margin-left auto; margin-right auto;\n",
-      " >'+ '<iframe scrolling= no style= border 0px none; overflow hidden; src=\n",
-      "net/br/t1\n",
-      "0/m_js/e_0/sn_0/l_17382965/su_0/rs_0/tr_3vUCAPbDxQAOMatG2kio36-S_8Za0BcCULMDYhA5GgK0xkS9nYVx7BVvBrmXmtyU2xAC0TTHPFHGOm9f6iOvTF0CZWCfC_4Qvk1llmym7f0Bg9tZn143OaB_XOCrzrU5BOmo-58juSMGF8R3GCkLWlQJ-T6TvZ_8B_Ceoi3YNhKBeUgIVRXclQ5QCoSDIV4e77ZMmImHVFa1-vgnxZPLyWnFdI6947vqTfRCaqv6F6xT25rnsSSLXbyUkhSudMvEdPxiBr9kPVip5xwoG5rC9QgNutmXXYEDFZQyBw9aIz7_BDGLqMwaipfq208jI0t5u8CLfwbqI7WFm_0F1nWJ0JuXHw8wEqGJ__sA3ZtsL8lLuUPOcvWUrbWgCQ4ANFoKeTBZrsnN9zsKDWGgQvtZ4EKUevda1rrJRx2mQrYo3ed3cK0ia6xPyycScMNd5mXbFf89xEvsB_0XTgSh5hCwICM/ width= 290px height= 50px ></iframe>'+ '</div>'\n",
-      " Submit\n",
-      " Corrections\n",
-      " Writer s\n",
-      " HITCHINGS\n",
-      " STEWART\n",
-      " RODERICK\n",
-      " APPICE\n",
-      " CARMINE\n",
-      " AZLyrics\n",
-      " Stewart\n",
-      " Lyrics\n",
-      " Search\n"
+      "Who you lookin for duder? Dokken\n"
      ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>song</th>\n",
+       "      <th>time</th>\n",
+       "      <th>lyrics</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Felony</td>\n",
+       "      <td>2:49</td>\n",
+       "      <td>Felony\\r\\nIn tight blue jeans\\r\\nI did not kno...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Prisoner [Live]</td>\n",
+       "      <td>6:06</td>\n",
+       "      <td>It wasn't just your innocence\\r\\nNo, it wasn't...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Breaking the Chains</td>\n",
+       "      <td>3:51</td>\n",
+       "      <td>Sit there thinkin'\\r\\nIn your room\\r\\nYou feel...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>I Can't See You</td>\n",
+       "      <td>3:11</td>\n",
+       "      <td>You keep me waitin'\\r\\nWhy I don't know\\r\\nSee...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>In the Middle</td>\n",
+       "      <td>3:43</td>\n",
+       "      <td>I talk with you\\r\\nI think of her\\r\\nIt always...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>Live to Rock (Rock to Live)</td>\n",
+       "      <td>3:39</td>\n",
+       "      <td>Run out of breath\\r\\nAnd I feel I'm moving too...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>Nightrider</td>\n",
+       "      <td>3:13</td>\n",
+       "      <td>It's late at night\\r\\nI get that feeling runni...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>Paris Is Burning</td>\n",
+       "      <td>5:11</td>\n",
+       "      <td>This town I'm in can't take no more\\r\\nDecaden...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>Seven Thunders</td>\n",
+       "      <td>3:55</td>\n",
+       "      <td>Demon eyes\\r\\nAnd the fate is coming down on y...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>Stick to Your Guns</td>\n",
+       "      <td>3:25</td>\n",
+       "      <td>Well I've been trying this for so very long\\r\\...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>Young Girls</td>\n",
+       "      <td>3:14</td>\n",
+       "      <td>Staying out all night dancing\\r\\nYou can't kee...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>Bullets to Spare</td>\n",
+       "      <td>3:35</td>\n",
+       "      <td>The shooting's over\\r\\nThe smoke is clear\\r\\nA...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>12</th>\n",
+       "      <td>Don't Close Your Eyes</td>\n",
+       "      <td>4:10</td>\n",
+       "      <td>Somebody's watching me, is it just a crazy dre...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>Heartless Heart</td>\n",
+       "      <td>3:30</td>\n",
+       "      <td>Every night it's the same old thing\\r\\nBaby, I...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>14</th>\n",
+       "      <td>Turn on the Action</td>\n",
+       "      <td>4:43</td>\n",
+       "      <td>I'm like a wildcat at midnight\\r\\nI'm like a s...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>15</th>\n",
+       "      <td>Without Warning</td>\n",
+       "      <td>1:34</td>\n",
+       "      <td>[Instrumental]\\n</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>16</th>\n",
+       "      <td>Don't Lie to Me</td>\n",
+       "      <td>3:37</td>\n",
+       "      <td>You didn't see me, but I overheard\\r\\nA short ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>17</th>\n",
+       "      <td>The Hunter</td>\n",
+       "      <td>4:07</td>\n",
+       "      <td>Clouds roll by as I look to the sky\\r\\nAnd the...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>18</th>\n",
+       "      <td>Jaded Heart</td>\n",
+       "      <td>4:16</td>\n",
+       "      <td>I didn't know you, but I could see it in your ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19</th>\n",
+       "      <td>Lightnin' Strikes Again</td>\n",
+       "      <td>3:48</td>\n",
+       "      <td>The lights go down\\r\\nYou can feel it all arou...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>20</th>\n",
+       "      <td>Slippin' Away</td>\n",
+       "      <td>3:48</td>\n",
+       "      <td>Like a whisper, you came in the night\\r\\nGone ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>21</th>\n",
+       "      <td>Will the Sun Rise?</td>\n",
+       "      <td>4:10</td>\n",
+       "      <td>In the name of liberty, we set off to the sea\\...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>22</th>\n",
+       "      <td>Burning Like a Flame</td>\n",
+       "      <td>4:46</td>\n",
+       "      <td>Never thought our love would last\\r\\nFor so lo...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>23</th>\n",
+       "      <td>Cry of the Gypsy</td>\n",
+       "      <td>4:51</td>\n",
+       "      <td>You say I'm a restless soul \\r\\nI don't mind \\...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>24</th>\n",
+       "      <td>Dream Warriors</td>\n",
+       "      <td>4:42</td>\n",
+       "      <td>I lie awake and dread the lonely nights\\nI'm n...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>25</th>\n",
+       "      <td>Heaven Sent</td>\n",
+       "      <td>4:52</td>\n",
+       "      <td>There seems no justice when you fall in love \\...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>26</th>\n",
+       "      <td>Kiss of Death</td>\n",
+       "      <td>5:51</td>\n",
+       "      <td>A brief encounter\\r\\nLike wind through the tre...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>27</th>\n",
+       "      <td>Lost Behind the Wall</td>\n",
+       "      <td>4:19</td>\n",
+       "      <td>When the sun fades to black and the night has ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>28</th>\n",
+       "      <td>Night by Night</td>\n",
+       "      <td>5:23</td>\n",
+       "      <td>It's bad enough being under control\\r\\nSame th...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>29</th>\n",
+       "      <td>Prisoner</td>\n",
+       "      <td>4:20</td>\n",
+       "      <td>It wasn't just your innocence\\r\\nNo, it wasn't...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>62</th>\n",
+       "      <td>Who Believes</td>\n",
+       "      <td>4:23</td>\n",
+       "      <td>Tried to go to sleep last night\\nBut too many ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>63</th>\n",
+       "      <td>Drown [DVD]</td>\n",
+       "      <td>4:52</td>\n",
+       "      <td>I been left in the crossfire / sacrificed to l...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>64</th>\n",
+       "      <td>Sign of the Times</td>\n",
+       "      <td>3:14</td>\n",
+       "      <td>Life is a mystery\\nLeaves me no consolation\\nL...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>65</th>\n",
+       "      <td>Paris Is Burning [Live]</td>\n",
+       "      <td>5:09</td>\n",
+       "      <td>This town, I'm in can't take no more\\nDecadenc...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>66</th>\n",
+       "      <td>Tooth and Nail [DVD]</td>\n",
+       "      <td></td>\n",
+       "      <td>Desperate living- driving me mad\\r\\nWritings o...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>67</th>\n",
+       "      <td>Breaking the Chains [Live]</td>\n",
+       "      <td>3:55</td>\n",
+       "      <td>Sit there thinkin'\\r\\nIn your room\\r\\nYou feel...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>68</th>\n",
+       "      <td>Goodbye My Friend</td>\n",
+       "      <td>4:06</td>\n",
+       "      <td>I tried to say, didn't love you, or need you\\n...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>69</th>\n",
+       "      <td>Heart Full of Soul</td>\n",
+       "      <td>2:28</td>\n",
+       "      <td>Sick at heart and lonely, deep in dark despair...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>70</th>\n",
+       "      <td>Little Girl</td>\n",
+       "      <td>3:44</td>\n",
+       "      <td>Mother never told you\\r\\nThat's all right\\r\\nD...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>71</th>\n",
+       "      <td>There Was a Time</td>\n",
+       "      <td>3:53</td>\n",
+       "      <td>D. Dokken/K. Keeling\\n\\nIt was late like the s...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>72</th>\n",
+       "      <td>You</td>\n",
+       "      <td>3:47</td>\n",
+       "      <td>Life as dreams\\r\\nStreets of gold\\r\\nYou used ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>73</th>\n",
+       "      <td>In My Dreams [Live]</td>\n",
+       "      <td>5:42</td>\n",
+       "      <td>Toss and turn all night in the sheets\\r\\nI can...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>74</th>\n",
+       "      <td>Tooth and Nail [Live]</td>\n",
+       "      <td>4:31</td>\n",
+       "      <td>Desperate living- driving me mad\\r\\nWritings o...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>75</th>\n",
+       "      <td>Unchain the Night [Live]</td>\n",
+       "      <td>6:21</td>\n",
+       "      <td>I've been lost in the middle\\r\\nAlways trying ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>76</th>\n",
+       "      <td>Alone Again [1995/ Live In Tokyo]</td>\n",
+       "      <td>7:22</td>\n",
+       "      <td>I'd like to see you in the morning light\\r\\nI'...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>77</th>\n",
+       "      <td>Alone Again</td>\n",
+       "      <td></td>\n",
+       "      <td>I'd like to see you in the morning light\\nI li...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>78</th>\n",
+       "      <td>I Will Remember</td>\n",
+       "      <td></td>\n",
+       "      <td>I will remember you\\r\\nWill you remember me?\\r...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>79</th>\n",
+       "      <td>Better Off Before</td>\n",
+       "      <td>3:00</td>\n",
+       "      <td>But can I find my way to you?\\nWe've got this ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>80</th>\n",
+       "      <td>Can You See</td>\n",
+       "      <td>4:09</td>\n",
+       "      <td>It's not hard to believe\\nThat the world isn't...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>81</th>\n",
+       "      <td>Don't Bring Me Down</td>\n",
+       "      <td>3:24</td>\n",
+       "      <td>I played the fool, it seems a thousand times b...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>82</th>\n",
+       "      <td>Escape</td>\n",
+       "      <td>4:37</td>\n",
+       "      <td>Turn the lights down low there's nobody home\\r...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>83</th>\n",
+       "      <td>I Surrender</td>\n",
+       "      <td>3:03</td>\n",
+       "      <td>Leave me here alone\\nLying in the burning sun\\...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>84</th>\n",
+       "      <td>The Last Goodbye</td>\n",
+       "      <td>4:37</td>\n",
+       "      <td>I walk these streets they built with progress\\...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>85</th>\n",
+       "      <td>Still I'm Sad</td>\n",
+       "      <td>4:37</td>\n",
+       "      <td>You were the one on the trigger\\nDeciding the ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>86</th>\n",
+       "      <td>Til the Livin' End</td>\n",
+       "      <td>4:02</td>\n",
+       "      <td>It's too late to tell me you're sorry\\r\\nIt's ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>87</th>\n",
+       "      <td>Heart to Stone</td>\n",
+       "      <td>3:56</td>\n",
+       "      <td>I can't see your face anymore\\nThrough our bro...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>88</th>\n",
+       "      <td>Judgment Day</td>\n",
+       "      <td>4:02</td>\n",
+       "      <td>Say a prayer, for the day, that you first bega...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>89</th>\n",
+       "      <td>Standing on the Outside</td>\n",
+       "      <td>3:52</td>\n",
+       "      <td>You knew there'd be consequences, \\nWhen I gav...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>90</th>\n",
+       "      <td>This Fire</td>\n",
+       "      <td>4:42</td>\n",
+       "      <td>On and on we go again\\nThere seems no point of...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>91</th>\n",
+       "      <td>Mirror Mirror</td>\n",
+       "      <td>4:40</td>\n",
+       "      <td>Look inside my eyes\\r\\nYou can see everywhere ...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>92 rows × 3 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                 song  time  \\\n",
+       "0                              Felony  2:49   \n",
+       "1                     Prisoner [Live]  6:06   \n",
+       "2                 Breaking the Chains  3:51   \n",
+       "3                     I Can't See You  3:11   \n",
+       "4                       In the Middle  3:43   \n",
+       "5         Live to Rock (Rock to Live)  3:39   \n",
+       "6                          Nightrider  3:13   \n",
+       "7                    Paris Is Burning  5:11   \n",
+       "8                      Seven Thunders  3:55   \n",
+       "9                  Stick to Your Guns  3:25   \n",
+       "10                        Young Girls  3:14   \n",
+       "11                   Bullets to Spare  3:35   \n",
+       "12              Don't Close Your Eyes  4:10   \n",
+       "13                    Heartless Heart  3:30   \n",
+       "14                 Turn on the Action  4:43   \n",
+       "15                    Without Warning  1:34   \n",
+       "16                    Don't Lie to Me  3:37   \n",
+       "17                         The Hunter  4:07   \n",
+       "18                        Jaded Heart  4:16   \n",
+       "19            Lightnin' Strikes Again  3:48   \n",
+       "20                      Slippin' Away  3:48   \n",
+       "21                 Will the Sun Rise?  4:10   \n",
+       "22               Burning Like a Flame  4:46   \n",
+       "23                   Cry of the Gypsy  4:51   \n",
+       "24                     Dream Warriors  4:42   \n",
+       "25                        Heaven Sent  4:52   \n",
+       "26                      Kiss of Death  5:51   \n",
+       "27               Lost Behind the Wall  4:19   \n",
+       "28                     Night by Night  5:23   \n",
+       "29                           Prisoner  4:20   \n",
+       "..                                ...   ...   \n",
+       "62                       Who Believes  4:23   \n",
+       "63                        Drown [DVD]  4:52   \n",
+       "64                  Sign of the Times  3:14   \n",
+       "65            Paris Is Burning [Live]  5:09   \n",
+       "66               Tooth and Nail [DVD]         \n",
+       "67         Breaking the Chains [Live]  3:55   \n",
+       "68                  Goodbye My Friend  4:06   \n",
+       "69                 Heart Full of Soul  2:28   \n",
+       "70                        Little Girl  3:44   \n",
+       "71                   There Was a Time  3:53   \n",
+       "72                                You  3:47   \n",
+       "73                In My Dreams [Live]  5:42   \n",
+       "74              Tooth and Nail [Live]  4:31   \n",
+       "75           Unchain the Night [Live]  6:21   \n",
+       "76  Alone Again [1995/ Live In Tokyo]  7:22   \n",
+       "77                        Alone Again         \n",
+       "78                    I Will Remember         \n",
+       "79                  Better Off Before  3:00   \n",
+       "80                        Can You See  4:09   \n",
+       "81                Don't Bring Me Down  3:24   \n",
+       "82                             Escape  4:37   \n",
+       "83                        I Surrender  3:03   \n",
+       "84                   The Last Goodbye  4:37   \n",
+       "85                      Still I'm Sad  4:37   \n",
+       "86                 Til the Livin' End  4:02   \n",
+       "87                     Heart to Stone  3:56   \n",
+       "88                       Judgment Day  4:02   \n",
+       "89            Standing on the Outside  3:52   \n",
+       "90                          This Fire  4:42   \n",
+       "91                      Mirror Mirror  4:40   \n",
+       "\n",
+       "                                               lyrics  \n",
+       "0   Felony\\r\\nIn tight blue jeans\\r\\nI did not kno...  \n",
+       "1   It wasn't just your innocence\\r\\nNo, it wasn't...  \n",
+       "2   Sit there thinkin'\\r\\nIn your room\\r\\nYou feel...  \n",
+       "3   You keep me waitin'\\r\\nWhy I don't know\\r\\nSee...  \n",
+       "4   I talk with you\\r\\nI think of her\\r\\nIt always...  \n",
+       "5   Run out of breath\\r\\nAnd I feel I'm moving too...  \n",
+       "6   It's late at night\\r\\nI get that feeling runni...  \n",
+       "7   This town I'm in can't take no more\\r\\nDecaden...  \n",
+       "8   Demon eyes\\r\\nAnd the fate is coming down on y...  \n",
+       "9   Well I've been trying this for so very long\\r\\...  \n",
+       "10  Staying out all night dancing\\r\\nYou can't kee...  \n",
+       "11  The shooting's over\\r\\nThe smoke is clear\\r\\nA...  \n",
+       "12  Somebody's watching me, is it just a crazy dre...  \n",
+       "13  Every night it's the same old thing\\r\\nBaby, I...  \n",
+       "14  I'm like a wildcat at midnight\\r\\nI'm like a s...  \n",
+       "15                                   [Instrumental]\\n  \n",
+       "16  You didn't see me, but I overheard\\r\\nA short ...  \n",
+       "17  Clouds roll by as I look to the sky\\r\\nAnd the...  \n",
+       "18  I didn't know you, but I could see it in your ...  \n",
+       "19  The lights go down\\r\\nYou can feel it all arou...  \n",
+       "20  Like a whisper, you came in the night\\r\\nGone ...  \n",
+       "21  In the name of liberty, we set off to the sea\\...  \n",
+       "22  Never thought our love would last\\r\\nFor so lo...  \n",
+       "23  You say I'm a restless soul \\r\\nI don't mind \\...  \n",
+       "24  I lie awake and dread the lonely nights\\nI'm n...  \n",
+       "25  There seems no justice when you fall in love \\...  \n",
+       "26  A brief encounter\\r\\nLike wind through the tre...  \n",
+       "27  When the sun fades to black and the night has ...  \n",
+       "28  It's bad enough being under control\\r\\nSame th...  \n",
+       "29  It wasn't just your innocence\\r\\nNo, it wasn't...  \n",
+       "..                                                ...  \n",
+       "62  Tried to go to sleep last night\\nBut too many ...  \n",
+       "63  I been left in the crossfire / sacrificed to l...  \n",
+       "64  Life is a mystery\\nLeaves me no consolation\\nL...  \n",
+       "65  This town, I'm in can't take no more\\nDecadenc...  \n",
+       "66  Desperate living- driving me mad\\r\\nWritings o...  \n",
+       "67  Sit there thinkin'\\r\\nIn your room\\r\\nYou feel...  \n",
+       "68  I tried to say, didn't love you, or need you\\n...  \n",
+       "69  Sick at heart and lonely, deep in dark despair...  \n",
+       "70  Mother never told you\\r\\nThat's all right\\r\\nD...  \n",
+       "71  D. Dokken/K. Keeling\\n\\nIt was late like the s...  \n",
+       "72  Life as dreams\\r\\nStreets of gold\\r\\nYou used ...  \n",
+       "73  Toss and turn all night in the sheets\\r\\nI can...  \n",
+       "74  Desperate living- driving me mad\\r\\nWritings o...  \n",
+       "75  I've been lost in the middle\\r\\nAlways trying ...  \n",
+       "76  I'd like to see you in the morning light\\r\\nI'...  \n",
+       "77  I'd like to see you in the morning light\\nI li...  \n",
+       "78  I will remember you\\r\\nWill you remember me?\\r...  \n",
+       "79  But can I find my way to you?\\nWe've got this ...  \n",
+       "80  It's not hard to believe\\nThat the world isn't...  \n",
+       "81  I played the fool, it seems a thousand times b...  \n",
+       "82  Turn the lights down low there's nobody home\\r...  \n",
+       "83  Leave me here alone\\nLying in the burning sun\\...  \n",
+       "84  I walk these streets they built with progress\\...  \n",
+       "85  You were the one on the trigger\\nDeciding the ...  \n",
+       "86  It's too late to tell me you're sorry\\r\\nIt's ...  \n",
+       "87  I can't see your face anymore\\nThrough our bro...  \n",
+       "88  Say a prayer, for the day, that you first bega...  \n",
+       "89  You knew there'd be consequences, \\nWhen I gav...  \n",
+       "90  On and on we go again\\nThere seems no point of...  \n",
+       "91  Look inside my eyes\\r\\nYou can see everywhere ...  \n",
+       "\n",
+       "[92 rows x 3 columns]"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
     }
    ],
    "source": [
-    "for i in sent.split('.'):\n",
-    "    if len(i)>6:\n",
-    "        print(i)\n",
-    "    else:\n",
-    "        pass"
+    "lookup()"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": null,
+   "execution_count": 12,
    "metadata": {},
-   "outputs": [],
-   "source": []
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Who you lookin for duder? dokken\n"
+     ]
+    }
+   ],
+   "source": [
+    "dokken = lookup()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "pandas.core.frame.DataFrame"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "type(dokken)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>song</th>\n",
+       "      <th>time</th>\n",
+       "      <th>lyrics</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Felony</td>\n",
+       "      <td>2:49</td>\n",
+       "      <td>Felony\\r\\nIn tight blue jeans\\r\\nI did not kno...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Prisoner [Live]</td>\n",
+       "      <td>6:06</td>\n",
+       "      <td>It wasn't just your innocence\\r\\nNo, it wasn't...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Breaking the Chains</td>\n",
+       "      <td>3:51</td>\n",
+       "      <td>Sit there thinkin'\\r\\nIn your room\\r\\nYou feel...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>I Can't See You</td>\n",
+       "      <td>3:11</td>\n",
+       "      <td>You keep me waitin'\\r\\nWhy I don't know\\r\\nSee...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>In the Middle</td>\n",
+       "      <td>3:43</td>\n",
+       "      <td>I talk with you\\r\\nI think of her\\r\\nIt always...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                  song  time  \\\n",
+       "0               Felony  2:49   \n",
+       "1      Prisoner [Live]  6:06   \n",
+       "2  Breaking the Chains  3:51   \n",
+       "3      I Can't See You  3:11   \n",
+       "4        In the Middle  3:43   \n",
+       "\n",
+       "                                              lyrics  \n",
+       "0  Felony\\r\\nIn tight blue jeans\\r\\nI did not kno...  \n",
+       "1  It wasn't just your innocence\\r\\nNo, it wasn't...  \n",
+       "2  Sit there thinkin'\\r\\nIn your room\\r\\nYou feel...  \n",
+       "3  You keep me waitin'\\r\\nWhy I don't know\\r\\nSee...  \n",
+       "4  I talk with you\\r\\nI think of her\\r\\nIt always...  "
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "dokken.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Who you lookin for duder? the beatnuts\n"
+     ]
+    }
+   ],
+   "source": [
+    "beatnuts = lookup()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>song</th>\n",
+       "      <th>time</th>\n",
+       "      <th>lyrics</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Reign of the Tec</td>\n",
+       "      <td>3:21</td>\n",
+       "      <td>[JuJu]\\nIt's the hard little pistol-packing pu...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Are You Ready</td>\n",
+       "      <td>3:14</td>\n",
+       "      <td>What we gonna do right here is\\r\\nYeah, yeah, ...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Get Funky</td>\n",
+       "      <td>3:37</td>\n",
+       "      <td>Hook:\\n\"Get Funky\" \"That's right\" (x4)\\n\\nJuJu...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Intro</td>\n",
+       "      <td>1:46</td>\n",
+       "      <td>[CUTS, SCRATCHES &amp; PROPS]\\n\\nIt's a , it's a \\...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Props over Here</td>\n",
+       "      <td>4:00</td>\n",
+       "      <td>Showing love, with the fucking bass in your fa...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "               song  time                                             lyrics\n",
+       "0  Reign of the Tec  3:21  [JuJu]\\nIt's the hard little pistol-packing pu...\n",
+       "1     Are You Ready  3:14  What we gonna do right here is\\r\\nYeah, yeah, ...\n",
+       "2         Get Funky  3:37  Hook:\\n\"Get Funky\" \"That's right\" (x4)\\n\\nJuJu...\n",
+       "3             Intro  1:46  [CUTS, SCRATCHES & PROPS]\\n\\nIt's a , it's a \\...\n",
+       "4   Props over Here  4:00  Showing love, with the fucking bass in your fa..."
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "beatnuts.head()"
+   ]
   }
  ],
  "metadata": {
